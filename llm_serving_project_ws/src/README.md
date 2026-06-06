@@ -35,13 +35,32 @@ ros2 launch llm_serving_core core_system.launch.py
 ## 아키텍처
 
 ```
-[User Input] → /user_command (Topic)
-      ↓
-[LLM Agent] → JSON 파싱 → 태스크 시퀀스
+[User Input] → /user_command (Topic)     /guest_command (손님 입·퇴장)
+      ↓                                           ↓
+[LLM Agent] ← /table_status              [Table State Node]
+      ↓         (테이블별 손님 수 배열)
+ JSON 파싱 → 태스크 시퀀스
       ↓
 [Task Executor] → ServeTask Action → [Move Action Server]
       ↓                                    ↓
 [Robot State Node] ← /robot_status    [Gazebo + Safety Controller]
+```
+
+## 테이블 손님 상태
+
+`table_state_node`가 테이블별 손님 수를 배열로 관리하고 `/table_status`로 공유합니다.
+`guest_counts[i]` = (i+1)번 테이블 인원, `0`이면 빈 테이블.
+
+**터미널 입력 예시 (user_input_node):**
+- `손님 2명 입장` — 빈 테이블에 자동 배정
+- `2번 테이블에 손님 4명` — 지정 테이블 배정
+- `1번 테이블 퇴장` — 테이블 비우기
+- `테이블 상태` — 현재 상태 로그 출력
+
+**서비스 (ros2 service call):**
+```bash
+ros2 service call /seat_guests llm_serving_msgs/srv/SeatGuests "{party_size: 3, table_number: 0}"
+ros2 service call /leave_table llm_serving_msgs/srv/LeaveTable "{table_number: 1}"
 ```
 
 ## 프롬프트 설계

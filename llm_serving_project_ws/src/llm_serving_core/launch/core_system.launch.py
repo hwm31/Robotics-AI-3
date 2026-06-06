@@ -28,4 +28,10 @@ def generate_launch_description():
             name='robot_state_node',
             output='screen',
         ),
+        Node(
+            package='llm_serving_core',
+            executable='table_state_node',
+            name='table_state_node',
+            output='screen',
+        ),
     ])

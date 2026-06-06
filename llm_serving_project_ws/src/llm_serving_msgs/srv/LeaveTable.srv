@@ -1,0 +1,5 @@
+# 테이블 퇴장 — table_number는 1부터 시작
+uint8 table_number
+---
+bool success
+string message

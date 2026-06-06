@@ -28,6 +28,7 @@ setup(
             'llm_agent_node = llm_serving_core.llm_agent_node:main',
             'task_executor_node = llm_serving_core.task_executor_node:main',
             'robot_state_node = llm_serving_core.robot_state_node:main',
+            'table_state_node = llm_serving_core.table_state_node:main',
         ],
     },
 )
