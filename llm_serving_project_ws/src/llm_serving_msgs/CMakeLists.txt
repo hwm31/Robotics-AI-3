@@ -13,6 +13,9 @@ find_package(action_msgs REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/RobotState.msg"
+  "msg/TableStatus.msg"
+  "srv/SeatGuests.srv"
+  "srv/LeaveTable.srv"
   "action/ServeTask.action"
   DEPENDENCIES std_msgs geometry_msgs action_msgs
 )
