@@ -1,0 +1,61 @@
+# ROS 2 / colcon workspace
+build/
+install/
+log/
+.colcon/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+dist/
+*.egg
+.venv/
+venv/
+env/
+
+# IDE / editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.csettings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Gazebo / Ignition
+~/.gazebo/
+*.log
+
+# LLM API keys & secrets (never commit)
+.env
+.env.*
+*.pem
+credentials.json
+secrets.yaml
+
+# CMake / C++ build artifacts
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.o
+*.a
+
+# Test / coverage
+.coverage
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+
+# Temporary files
+*.tmp
+*.bak
