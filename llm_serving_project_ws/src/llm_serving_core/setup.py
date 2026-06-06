@@ -15,7 +15,11 @@ setup(
         (os.path.join('share', package_name, 'prompts'), glob('prompts/*')),
         (os.path.join('share', package_name, 'launch'), glob('launch/*.py')),
     ],
-    install_requires=['setuptools'],
+    install_requires=[
+        'setuptools',
+        'openai',
+        'python-dotenv',
+    ],
     zip_safe=True,
     maintainer='Robotics AI Team',
     maintainer_email='team@todo.todo',
