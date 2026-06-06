@@ -1,0 +1,26 @@
+# 테이블·주방 위치 좌표 (RoboRestaurant 월드 기준 — 실측 후 수정)
+kitchen:
+  name: kitchen
+  x: 0.0
+  y: 0.0
+  yaw: 0.0
+
+tables:
+  - name: table_1
+    x: 2.0
+    y: 1.5
+    yaw: 1.57
+  - name: table_2
+    x: 2.0
+    y: -1.5
+    yaw: 1.57
+  - name: table_3
+    x: 4.0
+    y: 1.5
+    yaw: 1.57
+
+home:
+  name: home
+  x: 0.0
+  y: 0.0
+  yaw: 0.0

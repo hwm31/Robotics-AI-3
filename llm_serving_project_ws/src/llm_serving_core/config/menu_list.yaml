@@ -1,0 +1,13 @@
+# 메뉴 목록 — 없는 메뉴 요청 시 예외 처리용
+menu:
+  beverages:
+    - coke
+    - water
+    - orange_juice
+  food:
+    - burger
+    - pizza
+    - salad
+  desserts:
+    - ice_cream
+    - cake

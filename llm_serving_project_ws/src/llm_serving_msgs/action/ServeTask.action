@@ -1,0 +1,11 @@
+# Goal — 서빙 작업 (목표지, 물품)
+string destination
+string[] items
+---
+# Result
+bool success
+string message
+---
+# Feedback — 진행 상태 추적
+string current_step
+float32 progress
