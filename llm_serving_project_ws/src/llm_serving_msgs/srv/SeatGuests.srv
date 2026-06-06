@@ -1,0 +1,7 @@
+# 손님 배정 — table_number=0 이면 빈 테이블 자동 선택
+uint8 party_size
+uint8 table_number
+---
+bool success
+uint8 assigned_table
+string message
