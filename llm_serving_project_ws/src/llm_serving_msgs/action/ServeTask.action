@@ -1,6 +1,7 @@
-# Goal — 서빙 작업 (목표지, 물품)
+# Goal — 주문 전달 / 서빙 작업
 string destination
 string[] items
+int32 table_number
 ---
 # Result
 bool success

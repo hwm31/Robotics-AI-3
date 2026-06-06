@@ -13,8 +13,8 @@ class UserInputNode(Node):
         self.publisher_ = self.create_publisher(String, 'user_command', 10)
         self.guest_pub = self.create_publisher(String, 'guest_command', 10)
         self.get_logger().info(
-            'User input node ready. Commands: serve orders or guest events '
-            '(e.g. "손님 2명 입장", "1번 테이블 퇴장", "테이블 상태"). Ctrl+C to quit.')
+            'User input node ready. Guest: "손님 2명 입장", "1번 테이블 퇴장". '
+            'Order: "2번 테이블, 버거랑 콜라 주세요". Ctrl+C to quit.')
 
         self.timer = self.create_timer(0.1, self._poll_input)
 

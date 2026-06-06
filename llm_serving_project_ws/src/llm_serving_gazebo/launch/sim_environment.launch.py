@@ -55,7 +55,7 @@ def generate_launch_description():
 
     safety_controller = Node(
         package='llm_serving_gazebo',
-        executable='safety_controller_node.py',
+        executable='safety_controller_node',
         name='safety_controller_node',
         output='screen',
         parameters=[{'use_sim_time': LaunchConfiguration('use_sim_time')}],
@@ -63,7 +63,7 @@ def generate_launch_description():
 
     move_server = Node(
         package='llm_serving_gazebo',
-        executable='move_action_server.py',
+        executable='move_action_server',
         name='move_action_server',
         output='screen',
         parameters=[{'use_sim_time': LaunchConfiguration('use_sim_time')}],

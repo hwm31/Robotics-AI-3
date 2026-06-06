@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Task Executor 명령을 받아 Gazebo 로봇 이동 (cmd_vel 등)."""
+"""주문을 받아 주방으로 이동 후 주문 내용을 알림."""
 
 import rclpy
 from geometry_msgs.msg import Twist
@@ -30,24 +30,29 @@ class MoveActionServer(Node):
 
     def _goal_callback(self, goal_request):
         self.get_logger().info(
-            f'Goal: {goal_request.destination}, items={goal_request.items}')
+            f'Order goal: table={goal_request.table_number}, '
+            f'items={goal_request.items}')
+        if goal_request.table_number <= 0:
+            self.get_logger().warn('Rejected: table_number is required.')
+            return GoalResponse.REJECT
+        if not goal_request.items:
+            self.get_logger().warn('Rejected: no items in order.')
+            return GoalResponse.REJECT
         return GoalResponse.ACCEPT
 
     def _cancel_callback(self, goal_handle):
         return CancelResponse.ACCEPT
 
     async def _execute_callback(self, goal_handle):
-        destination = goal_handle.request.destination
+        table_number = goal_handle.request.table_number
         items = goal_handle.request.items
 
         feedback = ServeTask.Feedback()
         result = ServeTask.Result()
 
         steps = [
-            ('navigating_to_kitchen', 0.3),
-            ('loading_items', 0.5),
-            (f'navigating_to_{destination}', 0.8),
-            ('delivering', 1.0),
+            ('navigating_to_kitchen', 0.5),
+            ('announcing_order', 1.0),
         ]
 
         for step_name, progress in steps:
@@ -62,18 +67,26 @@ class MoveActionServer(Node):
             goal_handle.publish_feedback(feedback)
             self.get_logger().info(f'Step: {step_name}')
 
-            # TODO: restaurant_map.yaml 좌표 기반 실제 내비게이션
-            twist = Twist()
-            twist.linear.x = 0.1
-            self.cmd_pub.publish(twist)
-
-            await self._sleep(1.0)
-
-        stop = Twist()
-        self.cmd_pub.publish(stop)
+            if step_name == 'navigating_to_kitchen':
+                # TODO: restaurant_map.yaml kitchen 좌표 기반 실제 내비게이션
+                twist = Twist()
+                twist.linear.x = 0.1
+                self.cmd_pub.publish(twist)
+                await self._sleep(1.0)
+                stop = Twist()
+                self.cmd_pub.publish(stop)
+            elif step_name == 'announcing_order':
+                item_labels = ', '.join(items)
+                announcement = (
+                    f'Table {table_number} ordered: {item_labels}'
+                )
+                print(f'\n=== Kitchen ===\nRobot: {announcement}\n')
+                self.get_logger().info(announcement)
 
         result.success = True
-        result.message = f'Delivered {items} to {destination}'
+        result.message = (
+            f'Relayed order to kitchen — table {table_number}: {items}'
+        )
         goal_handle.succeed()
         return result
 
