@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""쪼개진 Action 시퀀스 순차 실행 및 제어."""
+"""주문 태스크를 Action으로 전달."""
 
 import json
 
@@ -31,21 +31,28 @@ class TaskExecutorNode(Node):
             self.get_logger().error('Invalid task JSON.')
             return
 
-        self._busy = True
-        self._execute_task(task)
+        if task.get('action') != 'order':
+            self.get_logger().warn(
+                f'Unsupported action: {task.get("action")}')
+            return
 
-    def _execute_task(self, task: dict):
+        self._busy = True
+        self._execute_order(task)
+
+    def _execute_order(self, task: dict):
         if not self._action_client.wait_for_server(timeout_sec=5.0):
             self.get_logger().error('ServeTask action server not available.')
             self._busy = False
             return
 
         goal = ServeTask.Goal()
-        goal.destination = task.get('destination', '')
+        goal.destination = task.get('destination', 'kitchen')
         goal.items = task.get('items', [])
+        goal.table_number = int(task.get('table', 0))
 
         self.get_logger().info(
-            f'Sending goal: dest={goal.destination}, items={goal.items}')
+            f'Sending order to kitchen: table={goal.table_number}, '
+            f'items={goal.items}')
 
         send_future = self._action_client.send_goal_async(
             goal, feedback_callback=self._feedback_cb)
