@@ -33,6 +33,8 @@ setup(
             'task_executor_node = llm_serving_core.task_executor_node:main',
             'robot_state_node = llm_serving_core.robot_state_node:main',
             'table_state_node = llm_serving_core.table_state_node:main',
+            'greeting_node = llm_serving_core.greeting_node:main',
+            'greeting_to_table_node = llm_serving_core.greeting_to_table_node:main',
         ],
     },
 )
