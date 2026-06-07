@@ -35,6 +35,7 @@ setup(
             'table_state_node = llm_serving_core.table_state_node:main',
             'greeting_node = llm_serving_core.greeting_node:main',
             'greeting_to_table_node = llm_serving_core.greeting_to_table_node:main',
+            'fleet_manager_node = llm_serving_core.fleet_manager_node:main',
         ],
     },
 )

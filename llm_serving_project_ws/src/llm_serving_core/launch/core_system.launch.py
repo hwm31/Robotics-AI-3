@@ -33,8 +33,8 @@ def generate_launch_description():
         ),
         Node(
             package='llm_serving_core',
-            executable='user_input_node',
-            name='user_input_node',
+            executable='fleet_manager_node',
+            name='fleet_manager_node',
             output='screen',
             emulate_tty=True,
             parameters=[{
