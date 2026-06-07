@@ -168,7 +168,7 @@
             <remapping>~/out:=scan</remapping>
           </ros>
           <output_type>sensor_msgs/LaserScan</output_type>
-          <frame_name>base_scan</frame_name>
+          <frame_name>base_footprint</frame_name>
         </plugin>
       </sensor>
     </link>
@@ -398,7 +398,7 @@
       <max_wheel_torque>20</max_wheel_torque>
       <max_wheel_acceleration>1.0</max_wheel_acceleration>
 
-      <command_topic>cmd_vel</command_topic>
+      <command_topic>cmd_vel_safe</command_topic>
 
       <!-- output -->
       <publish_odom>true</publish_odom>

@@ -52,16 +52,8 @@ class FleetManagerNode(Node):
             self._request_seat_assignment(party_size)
             
         elif intent == 'order':
-            # 쉬고 있는 로봇을 찾아 주문을 받으러 (주방으로) 보냅니다.
-            table_num = task.get('table', 5)
-            items = task.get('items', [])
-            idle_robot = self._get_idle_robot()
-            
-            if idle_robot:
-                self.get_logger().info(f"[주문] Table {table_num}에서 {items} 주문. {idle_robot} 배차 -> 주방으로 이동.")
-                self._send_goal(idle_robot, destination='kitchen', table_number=table_num, items=items)
-            else:
-                self.get_logger().warn("모든 로봇이 작업 중(BUSY)이라 주문을 수행할 수 없습니다!")
+            # 주문 서빙은 task_executor_node가 단일 /serve_task 파이프라인으로 처리합니다.
+            self.get_logger().info('Order task received; task_executor_node will dispatch /serve_task.')
                 
         else:
             self.get_logger().warn(f"Unknown intent: {intent}")

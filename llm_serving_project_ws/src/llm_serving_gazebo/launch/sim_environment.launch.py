@@ -49,29 +49,33 @@ def generate_launch_description():
         launch_arguments={'world': LaunchConfiguration('world')}.items(),
     )
     
-    # === 로봇 1 스폰 ===
     spawn_robot1 = Node(
         package='gazebo_ros',
         executable='spawn_entity.py',
         arguments=[
-            '-entity', 'robot1',  # 엔티티 이름: robot1
+            '-entity', 'robot1',
             '-file', os.path.join(local_models, 'serving_robot', 'model.sdf'),
-            '-x', '-7.451785', '-y', '-6.672494', '-z', '0.3',  # 로봇 1 시작 위치
-            '-robot_namespace', 'robot1',          # 네임스페이스 분리
+            '-x', '-7.451785', '-y', '-6.672494', '-z', '0.3',
         ],
         output='screen',
     )
 
-    # === 로봇 2 스폰 ===
+    spawn_robot2_arg = DeclareLaunchArgument(
+        'spawn_robot2',
+        default_value='false',
+        description='Spawn the second robot. Disabled by default because this launch runs a single Nav2 stack.',
+    )
+
     spawn_robot2 = Node(
         package='gazebo_ros',
         executable='spawn_entity.py',
         arguments=[
-            '-entity', 'robot2',  # 엔티티 이름: robot2
+            '-entity', 'robot2',
             '-file', os.path.join(local_models, 'serving_robot', 'model.sdf'), 
-            '-x', ' 8.132760', '-y', '-1.000040', '-z', '0.3',  # 로봇 2 시작 위치
-            '-robot_namespace', 'robot2',          # 네임스페이스 분리
+            '-x', '8.132760', '-y', '-1.000040', '-z', '0.3',
+            '-robot_namespace', 'robot2',
         ],
+        condition=IfCondition(LaunchConfiguration('spawn_robot2')),
         output='screen',
     )
 
@@ -85,6 +89,8 @@ def generate_launch_description():
         ]),
         launch_arguments={
             'use_sim_time': LaunchConfiguration('use_sim_time'),
+            'map': os.path.join(pkg_share, 'maps', 'roborestaurant_static_003.yaml'),
+            'params_file': os.path.join(pkg_share, 'config', 'nav2_params.yaml'),
         }.items(),
         condition=IfCondition(LaunchConfiguration('start_nav2')),
     )
@@ -98,6 +104,7 @@ def generate_launch_description():
             'use_sim_time': LaunchConfiguration('use_sim_time'),
             'cmd_vel_in': 'cmd_vel',
             'cmd_vel_out': 'cmd_vel_safe',
+            'scan_topic': 'scan',
             'min_distance': 0.35,
             'clear_distance': 0.45,
             'front_angle_deg': 90.0,
@@ -121,9 +128,11 @@ def generate_launch_description():
         world_arg,
         use_sim_time,
         start_nav2,
+        spawn_robot2_arg,
         gazebo,
         spawn_robot1,
         spawn_robot2,
+        nav2,
         safety_controller,
         move_server,
     ])
