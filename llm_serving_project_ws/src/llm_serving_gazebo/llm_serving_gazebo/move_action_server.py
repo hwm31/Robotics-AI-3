@@ -50,6 +50,7 @@ class MoveActionServer(Node):
 
         callback_group = ReentrantCallbackGroup()
         nav_action_name = self.get_parameter('nav_action_name').value
+        self._nav_action_name = str(nav_action_name)
         self._nav_client = ActionClient(
             self,
             NavigateToPose,
@@ -334,10 +335,18 @@ class MoveActionServer(Node):
         if not self._nav_client.wait_for_server(
             timeout_sec=self._nav_server_timeout
         ):
-            return False, 'NavigateToPose action server not available'
+            message = (
+                f'NavigateToPose action server not available: '
+                f'{self._nav_action_name}'
+            )
+            self.get_logger().error(message)
+            return False, message
 
         nav_goal = NavigateToPose.Goal()
         nav_goal.pose = self._make_pose_stamped(pose)
+        self.get_logger().info(
+            f'Sending Nav2 goal to {self._nav_action_name} '
+            f'for {step_name}.')
 
         send_future = self._nav_client.send_goal_async(
             nav_goal,
@@ -347,11 +356,15 @@ class MoveActionServer(Node):
             ),
         )
         if not self._wait_for_future(send_future, 5.0):
-            return False, f'Timed out sending navigation goal for {step_name}'
+            message = f'Timed out sending navigation goal for {step_name}'
+            self.get_logger().error(message)
+            return False, message
 
         nav_goal_handle = send_future.result()
         if nav_goal_handle is None or not nav_goal_handle.accepted:
-            return False, f'Navigation goal rejected for {step_name}'
+            message = f'Navigation goal rejected for {step_name}'
+            self.get_logger().error(message)
+            return False, message
 
         self.get_logger().info(
             f'Navigating {step_name}: x={pose.x:.2f}, '
@@ -367,7 +380,9 @@ class MoveActionServer(Node):
             elapsed = time.monotonic() - start_time
             if elapsed > self._goal_timeout:
                 nav_goal_handle.cancel_goal_async()
-                return False, f'Navigation timed out during {step_name}'
+                message = f'Navigation timed out during {step_name}'
+                self.get_logger().error(message)
+                return False, message
 
             progress = self._interpolate_progress(
                 start_progress,
@@ -380,11 +395,12 @@ class MoveActionServer(Node):
 
         nav_result = result_future.result()
         if nav_result.status != GoalStatus.STATUS_SUCCEEDED:
-            return (
-                False,
+            message = (
                 f'Navigation failed during {step_name} '
-                f'(status={nav_result.status})',
+                f'(status={nav_result.status})'
             )
+            self.get_logger().error(message)
+            return False, message
 
         if goal_handle is not None:
             self._publish_feedback(goal_handle, step_name, end_progress)

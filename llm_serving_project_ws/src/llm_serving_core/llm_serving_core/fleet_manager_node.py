@@ -170,7 +170,10 @@ class FleetManagerNode(Node):
     def _result_cb(self, future, robot_id):
         """로봇 임무 완료 시 호출"""
         result = future.result().result
-        self.get_logger().info(f'[{robot_id} 임무 완료] {result.message}')
+        if result.success:
+            self.get_logger().info(f'[{robot_id} 임무 완료] {result.message}')
+        else:
+            self.get_logger().error(f'[{robot_id} 임무 실패] {result.message}')
         # 임무를 성공적으로 마쳤으므로 다시 다른 일을 할 수 있게 IDLE 상태로 변경!
         self._set_robot_state(robot_id, 'IDLE')
 

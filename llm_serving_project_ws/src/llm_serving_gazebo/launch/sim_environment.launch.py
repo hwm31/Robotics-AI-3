@@ -38,6 +38,15 @@ def generate_launch_description():
         description='Start Nav2 localization and navigation stack',
     )
 
+    spawn_robot2_arg = DeclareLaunchArgument(
+        'spawn_robot2',
+        default_value='false',
+        description=(
+            'Spawn robot2. Keep false for the single-Nav2 demo to avoid TF '
+            'frame collisions.'
+        ),
+    )
+
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
             PathJoinSubstitution([
@@ -58,6 +67,7 @@ def generate_launch_description():
             '-file', os.path.join(local_models, 'serving_robot', 'model.sdf'),
             '-x', '-7.451785', '-y', '-6.672494', '-z', '0.3',  # 로봇 1 시작 위치
             '-robot_namespace', 'robot1',          # 네임스페이스 분리
+            '-timeout', '60.0',
         ],
         output='screen',
     )
@@ -71,6 +81,30 @@ def generate_launch_description():
             '-file', os.path.join(local_models, 'serving_robot', 'model.sdf'), 
             '-x', ' 8.132760', '-y', '-1.000040', '-z', '0.3',  # 로봇 2 시작 위치
             '-robot_namespace', 'robot2',          # 네임스페이스 분리
+            '-timeout', '60.0',
+        ],
+        output='screen',
+        condition=IfCondition(LaunchConfiguration('spawn_robot2')),
+    )
+
+    base_to_link_tf = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        arguments=[
+            '0', '0', '0',
+            '0', '0', '0',
+            'base_footprint', 'base_link',
+        ],
+        output='screen',
+    )
+
+    link_to_scan_tf = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        arguments=[
+            '-0.032', '0', '0.171',
+            '0', '0', '0',
+            'base_link', 'base_scan',
         ],
         output='screen',
     )
@@ -138,6 +172,7 @@ def generate_launch_description():
             'safety_status_topic': 'safety_status',
             'emergency_stop_service': 'emergency_stop',
         }],
+        condition=IfCondition(LaunchConfiguration('spawn_robot2')),
     )
 
     action_robot2 = Node(
@@ -149,6 +184,7 @@ def generate_launch_description():
             'use_sim_time': LaunchConfiguration('use_sim_time'),
             'nav_action_name': '/navigate_to_pose',
         }],
+        condition=IfCondition(LaunchConfiguration('spawn_robot2')),
     )
 
     return LaunchDescription([
@@ -156,9 +192,12 @@ def generate_launch_description():
         world_arg,
         use_sim_time,
         start_nav2,
+        spawn_robot2_arg,
         gazebo,
         spawn_robot1,
         spawn_robot2,
+        base_to_link_tf,
+        link_to_scan_tf,
         safety_robot1,  # 기존 safety_controller 대신 교체
         action_robot1,  # 기존 move_server 대신 교체
         safety_robot2,  # 로봇 2용 추가
