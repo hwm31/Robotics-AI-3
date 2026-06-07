@@ -84,6 +84,13 @@ def generate_launch_description():
             'use_sim_time': LaunchConfiguration('use_sim_time'),
             'cmd_vel_in': 'cmd_vel',
             'cmd_vel_out': 'cmd_vel_safe',
+            'min_distance': 0.35,
+            'clear_distance': 0.45,
+            'front_angle_deg': 90.0,
+            'scan_timeout_sec': 1.0,
+            'cmd_timeout_sec': 0.8,
+            'safety_status_topic': 'safety_status',
+            'emergency_stop_service': 'emergency_stop',
         }],
     )
 
