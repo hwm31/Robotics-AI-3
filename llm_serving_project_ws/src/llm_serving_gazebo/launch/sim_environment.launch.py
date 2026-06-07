@@ -48,15 +48,29 @@ def generate_launch_description():
         ]),
         launch_arguments={'world': LaunchConfiguration('world')}.items(),
     )
-
-    spawn_robot = Node(
+    
+    # === 로봇 1 스폰 ===
+    spawn_robot1 = Node(
         package='gazebo_ros',
         executable='spawn_entity.py',
         arguments=[
-            '-entity', 'serving_robot',
+            '-entity', 'robot1',  # 엔티티 이름: robot1
             '-file', os.path.join(local_models, 'serving_robot', 'model.sdf'),
-            '-x', '0.0', '-y', '0.0', '-z', '0.1',
-            '-timeout', '60',
+            '-x', '-7.451785', '-y', '-6.672494', '-z', '0.3',  # 로봇 1 시작 위치
+            '-robot_namespace', 'robot1',          # 네임스페이스 분리
+        ],
+        output='screen',
+    )
+
+    # === 로봇 2 스폰 ===
+    spawn_robot2 = Node(
+        package='gazebo_ros',
+        executable='spawn_entity.py',
+        arguments=[
+            '-entity', 'robot2',  # 엔티티 이름: robot2
+            '-file', os.path.join(local_models, 'serving_robot', 'model.sdf'), 
+            '-x', ' 8.132760', '-y', '-1.000040', '-z', '0.3',  # 로봇 2 시작 위치
+            '-robot_namespace', 'robot2',          # 네임스페이스 분리
         ],
         output='screen',
     )
@@ -108,8 +122,8 @@ def generate_launch_description():
         use_sim_time,
         start_nav2,
         gazebo,
-        spawn_robot,
-        nav2,
+        spawn_robot1,
+        spawn_robot2,
         safety_controller,
         move_server,
     ])
