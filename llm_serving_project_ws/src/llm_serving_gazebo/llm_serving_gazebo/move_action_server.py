@@ -68,7 +68,7 @@ class MoveActionServer(Node):
 
         self._initial_pose_pub = self.create_publisher(
             PoseWithCovarianceStamped,
-            'initialpose',
+            '/initialpose',
             10,
         )
         self._greeting_sub = self.create_subscription(

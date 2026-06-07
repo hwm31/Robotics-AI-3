@@ -52,5 +52,10 @@ def generate_launch_description():
             name='user_input_node',
             output='screen',
             emulate_tty=True,
+            parameters=[{
+                'input_mode': input_mode,
+                'speech_language': speech_language,
+                'voice_trigger_key': voice_trigger_key,
+            }],
         ),
     ])

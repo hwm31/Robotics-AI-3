@@ -97,8 +97,8 @@ def generate_launch_description():
         output='screen',
         parameters=[{
             'use_sim_time': LaunchConfiguration('use_sim_time'),
-            'cmd_vel_in': 'cmd_vel',
-            'cmd_vel_out': 'cmd_vel_safe',
+            'cmd_vel_in': '/cmd_vel',
+            'cmd_vel_out': 'cmd_vel',
             'min_distance': 0.35,
             'clear_distance': 0.45,
             'front_angle_deg': 90.0,

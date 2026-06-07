@@ -9,7 +9,7 @@ amcl:
     base_frame_id: "base_link"
     global_frame_id: "map"
     odom_frame_id: "odom"
-    scan_topic: "scan"
+    scan_topic: "/robot1/scan"
     robot_model_type: "nav2_amcl::DifferentialMotionModel"
     laser_model_type: "likelihood_field"
     min_particles: 500
@@ -33,7 +33,7 @@ bt_navigator:
     use_sim_time: true
     global_frame: "map"
     robot_base_frame: "base_link"
-    odom_topic: "odom"
+    odom_topic: "/robot1/odom"
     bt_loop_duration: 10
     default_server_timeout: 20
     wait_for_service_timeout: 1000
@@ -173,7 +173,7 @@ local_costmap:
         enabled: true
         observation_sources: scan
         scan:
-          topic: "scan"
+          topic: "/robot1/scan"
           data_type: "LaserScan"
           clearing: true
           marking: true
@@ -208,7 +208,7 @@ global_costmap:
         enabled: true
         observation_sources: scan
         scan:
-          topic: "scan"
+          topic: "/robot1/scan"
           data_type: "LaserScan"
           clearing: true
           marking: true
@@ -301,7 +301,7 @@ velocity_smoother:
     min_velocity: [-0.10, 0.0, -0.8]
     max_accel: [1.0, 0.0, 2.0]
     max_decel: [-1.0, 0.0, -2.0]
-    odom_topic: "odom"
+    odom_topic: "/robot1/odom"
     odom_duration: 0.1
     deadband_velocity: [0.0, 0.0, 0.0]
     velocity_timeout: 1.0
