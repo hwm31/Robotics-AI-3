@@ -339,6 +339,11 @@ ros2 launch llm_serving_core core_system.launch.py input_mode:=both
 
 ## 데모 시나리오
 
+### 🎥 시연 영상
+[시연 영상: 로봇 네비게이션 및 서빙 시나리오](docs/robot_nav2.mp4)
+
+*(참고: 위 링크를 클릭하면 Gazebo 환경에서 로봇이 주방에서 출발해 테이블로 이동하고 복귀하는 과정을 확인할 수 있습니다.)*
+
 ### 시나리오 1: 손님 입장 후 주문 서빙
 
 터미널 2의 `user_input_node` 입력창에 다음 순서로 입력합니다.
