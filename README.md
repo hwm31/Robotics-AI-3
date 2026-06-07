@@ -216,6 +216,17 @@ navigating_to_kitchen
 
 ### 로봇 안전 제어
 
+```mermaid
+flowchart LR
+    NAV2[Nav2 Controller] -->|/cmd_vel| SAFETY[safety_controller_node]
+    LIDAR[LiDAR] -->|/scan| SAFETY
+    ESTOP[/emergency_stop/] --> SAFETY
+    SAFETY -->|safe| SAFEVEL[/cmd_vel_safe/]
+    SAFETY -->|blocked| STOP[linear=0<br/>angular=0]
+    SAFEVEL --> ROBOT[serving_robot]
+    SAFETY -->|/safety_status| STATUS[상태 모니터링]
+```
+
 `safety_controller_node`는 Nav2가 발행한 `/cmd_vel`을 바로 로봇에 전달하지 않고 안전 필터를 거쳐 `/cmd_vel_safe`로 전달합니다.
 
 ```text
