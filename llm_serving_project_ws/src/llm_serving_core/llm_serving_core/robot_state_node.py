@@ -4,6 +4,7 @@
 import rclpy
 from geometry_msgs.msg import Pose
 from llm_serving_msgs.msg import RobotState
+from nav_msgs.msg import Odometry
 from rclpy.node import Node
 
 
@@ -14,17 +15,22 @@ class RobotStateNode(Node):
 
         self._battery = self.get_parameter('initial_battery').value
         self._loaded_items: list[str] = []
+        self._pose = Pose()
         self._status = 'idle'
 
         self.state_pub = self.create_publisher(RobotState, 'robot_status', 10)
+        self.create_subscription(Odometry, 'odom', self._on_odom, 10)
         self.timer = self.create_timer(1.0, self._publish_state)
         self.get_logger().info('Robot state node ready.')
+
+    def _on_odom(self, msg: Odometry):
+        self._pose = msg.pose.pose
 
     def _publish_state(self):
         msg = RobotState()
         msg.header.stamp = self.get_clock().now().to_msg()
         msg.header.frame_id = 'map'
-        msg.pose = Pose()
+        msg.pose = self._pose
         msg.battery_percent = float(self._battery)
         msg.loaded_items = list(self._loaded_items)
         msg.status = self._status
@@ -40,7 +46,8 @@ def main(args=None):
         pass
     finally:
         node.destroy_node()
-        rclpy.shutdown()
+        if rclpy.ok():
+            rclpy.shutdown()
 
 
 if __name__ == '__main__':
