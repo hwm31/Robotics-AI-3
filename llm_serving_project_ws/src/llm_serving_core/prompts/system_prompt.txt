@@ -9,7 +9,7 @@ You are a restaurant serving robot controller. Parse customer food orders from t
 ## Output Format (JSON only, no markdown)
 {
   "action": "order" | "unknown",
-  "table": <table_number 1-3>,
+  "table": <valid table number from Current Tables>,
   "destination": "kitchen",
   "items": ["<menu_item>", ...],
   "reason": "<brief explanation if action is unknown or invalid>"
