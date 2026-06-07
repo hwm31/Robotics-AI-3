@@ -116,19 +116,25 @@ class MoveActionServer(Node):
         )
 
     def _goal_callback(self, goal_request):
+        destination = (goal_request.destination or 'table').strip().lower()
+        items = list(goal_request.items)
         self.get_logger().info(
-            f'Order goal: table={goal_request.table_number}, '
-            f'items={list(goal_request.items)}')
+            f'ServeTask goal: destination={destination}, '
+            f'table={goal_request.table_number}, items={items}')
+        if destination not in ('table', 'kitchen'):
+            self.get_logger().warn(
+                f'Rejected: unsupported destination: {destination}.')
+            return GoalResponse.REJECT
         if goal_request.table_number <= 0:
             self.get_logger().warn('Rejected: table_number is required.')
-            return GoalResponse.REJECT
-        if not goal_request.items:
-            self.get_logger().warn('Rejected: no items in order.')
             return GoalResponse.REJECT
         if f'table_{goal_request.table_number}' not in self._poses:
             self.get_logger().warn(
                 f'Rejected: no navigation target for table '
                 f'{goal_request.table_number}.')
+            return GoalResponse.REJECT
+        if destination == 'kitchen' and not items:
+            self.get_logger().warn('Rejected: kitchen task requires items.')
             return GoalResponse.REJECT
         return GoalResponse.ACCEPT
 
@@ -145,10 +151,55 @@ class MoveActionServer(Node):
             return result
 
         try:
-            result = self._execute_serving_sequence(goal_handle)
+            destination = (goal_handle.request.destination or 'table').strip().lower()
+            items = list(goal_handle.request.items)
+            if destination == 'table' and not items:
+                result = self._execute_guiding_sequence(goal_handle)
+            else:
+                result = self._execute_serving_sequence(goal_handle)
         finally:
             self._navigation_lock.release()
 
+        return result
+
+    def _execute_guiding_sequence(self, goal_handle):
+        table_number = int(goal_handle.request.table_number)
+        table_key = f'table_{table_number}'
+
+        result = ServeTask.Result()
+        steps: list[tuple[str, str, float, float]] = [
+            ('guiding_to_table', table_key, 0.0, 0.85),
+        ]
+        if self._return_home and 'home' in self._poses:
+            steps.append(('returning_home', 'home', 0.88, 1.0))
+
+        for step_name, target_key, start_progress, end_progress in steps:
+            if goal_handle.is_cancel_requested:
+                goal_handle.canceled()
+                result.success = False
+                result.message = 'Canceled'
+                return result
+
+            ok, message = self._navigate_to_target(
+                target_key,
+                step_name,
+                goal_handle=goal_handle,
+                start_progress=start_progress,
+                end_progress=end_progress,
+            )
+            if not ok:
+                if goal_handle.is_cancel_requested:
+                    goal_handle.canceled()
+                else:
+                    goal_handle.abort()
+                result.success = False
+                result.message = message
+                return result
+
+        result.success = True
+        result.message = f'Guided guests to table {table_number}'
+        self._publish_feedback(goal_handle, 'completed', 1.0)
+        goal_handle.succeed()
         return result
 
     def _execute_serving_sequence(self, goal_handle):

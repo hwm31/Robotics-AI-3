@@ -114,7 +114,10 @@ def generate_launch_description():
         executable='move_action_server',
         namespace='robot1',  # [핵심] robot1 네임스페이스 추가
         output='screen',
-        parameters=[{'use_sim_time': LaunchConfiguration('use_sim_time')}],
+        parameters=[{
+            'use_sim_time': LaunchConfiguration('use_sim_time'),
+            'nav_action_name': '/navigate_to_pose',
+        }],
     )
 
     # === [로봇 2 제어 노드들] ===
@@ -142,7 +145,10 @@ def generate_launch_description():
         executable='move_action_server',
         namespace='robot2',  # [핵심] robot2 네임스페이스 추가
         output='screen',
-        parameters=[{'use_sim_time': LaunchConfiguration('use_sim_time')}],
+        parameters=[{
+            'use_sim_time': LaunchConfiguration('use_sim_time'),
+            'nav_action_name': '/navigate_to_pose',
+        }],
     )
 
     return LaunchDescription([

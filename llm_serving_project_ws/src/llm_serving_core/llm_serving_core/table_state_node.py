@@ -145,21 +145,22 @@ class TableStateNode(Node):
 
 
     def _leave_table(self, table_number: int) -> tuple[bool, str]:
-        if table_number == 0:
-            return False, 'table_number must be greater than 0'
+        with self._state_lock:
+            if table_number == 0:
+                return False, 'table_number must be greater than 0'
 
-        index = table_number - 1
+            index = table_number - 1
 
-        if index < 0 or index >= len(self._guest_counts):
-            return False, f'invalid table number: {table_number}'
+            if index < 0 or index >= len(self._guest_counts):
+                return False, f'invalid table number: {table_number}'
 
-        if self._guest_counts[index] == 0:
-            return False, f'{self._table_label(index)} is already empty'
+            if self._guest_counts[index] == 0:
+                return False, f'{self._table_label(index)} is already empty'
 
-        self._guest_counts[index] = 0
-        self._publish_status()
+            self._guest_counts[index] = 0
+            self._publish_status()
 
-        return True, f'{self._table_label(index)} cleared'
+            return True, f'{self._table_label(index)} cleared'
 
     def _handle_seat(self, request, response):
         success, assigned, message = self._seat_guests(
@@ -211,6 +212,17 @@ class TableStateNode(Node):
             level = self.get_logger().info if success else self.get_logger().warn
             level(message)
             self._publish_assignment(success, assigned, message)
+        elif event == 'leave':
+            table = int(cmd.get('table', 0))
+            success, message = self._leave_table(table)
+            level = self.get_logger().info if success else self.get_logger().warn
+            level(message)
+            self._publish_assignment(success, table, message)
+        elif event == 'status':
+            self.get_logger().info(self._format_status())
+            self._publish_status()
+        else:
+            self.get_logger().warn(f'Unsupported guest event: {event}')
 
 
 def main(args=None):
