@@ -1,29 +1,74 @@
 # 테이블·주방 위치 좌표 (RoboRestaurant 월드 기준 — 실측 후 수정)
 kitchen:
   name: kitchen
-  x: 0.0
-  y: 0.0
+  x: 8.132760
+  y: -1.000040
   yaw: 0.0
 
 tables:
   - name: table_1
-    x: 2.0
-    y: 1.5
-    yaw: 1.57
-    max_seats: 4
+    x: -9.751590
+    y: 2.568590
+    yaw: 0.0
+    max_seats: 2
   - name: table_2
-    x: 2.0
-    y: -1.5
-    yaw: 1.57
-    max_seats: 4
+    x: -9.766150
+    y: -0.438342
+    yaw: 0.0
+    max_seats: 2
   - name: table_3
-    x: 4.0
-    y: 1.5
-    yaw: 1.57
+    x: -9.551050
+    y: -3.249520
+    yaw: 0.0
+    max_seats: 2
+  - name: table_4
+    x: -5.148840
+    y: 2.696100
+    yaw: 0.0
     max_seats: 4
+  - name: table_5
+    x: -5.066960
+    y: -0.327465
+    yaw: 0.0
+    max_seats: 4
+  - name: table_6
+    x: -4.983010
+    y: -3.185110
+    yaw: 0.0
+    max_seats: 4
+  - name: table_7
+    x: -0.943808
+    y: 2.522860
+    yaw: 0.0
+    max_seats: 4
+  - name: table_8
+    x: -0.806562
+    y: -0.322464
+    yaw: 0.0
+    max_seats: 4
+  - name: table_9
+    x: -0.847027
+    y: -3.192290
+    yaw: 0.0
+    max_seats: 4
+  - name: table_10
+    x: 3.881440
+    y: 2.512560
+    yaw: 0.0
+    max_seats: 4
+  - name: table_11
+    x: 3.691370
+    y: -0.151144
+    yaw: 0.0
+    max_seats: 10
+  - name: table_12
+    x: 3.859500
+    y: -3.097130
+    yaw: 0.0
+    max_seats: 10
 
 home:
   name: home
-  x: 0.0
-  y: 0.0
+  x: -7.451785
+  y: -6.672494
   yaw: 0.0
