@@ -30,7 +30,7 @@ setup(
         'console_scripts': [
             'user_input_node = llm_serving_core.user_input_node:main',
             'llm_agent_node = llm_serving_core.llm_agent_node:main',
-            'task_executor_node = llm_serving_core.task_executor_node:main',
+            # 'task_executor_node = llm_serving_core.task_executor_node:main',
             'robot_state_node = llm_serving_core.robot_state_node:main',
             'table_state_node = llm_serving_core.table_state_node:main',
             'greeting_node = llm_serving_core.greeting_node:main',
