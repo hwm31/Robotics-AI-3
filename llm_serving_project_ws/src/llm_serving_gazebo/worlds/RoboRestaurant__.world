@@ -1712,35 +1712,175 @@
       <pose>0.32728 -1.509 0 0 -0 0</pose>
     </model>
     <state world_name='default'>
-      <sim_time>219 726000000</sim_time>
-      <real_time>73 616620559</real_time>
-      <wall_time>1780812214 395647728</wall_time>
-      <iterations>73445</iterations>
-      <model name='bowl_2_clone'>
-        <pose>3.54389 -0.349057 0.774999 4.4e-05 3e-06 -0.956101</pose>
+      <sim_time>582 532000000</sim_time>
+      <real_time>491 455901517</real_time>
+      <wall_time>1780815622 792686941</wall_time>
+      <iterations>362806</iterations>
+      <model name='Fridge'>
+        <pose>11.6535 3.45353 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='body'>
+          <pose>11.6535 3.45353 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='Fridge_0'>
+        <pose>11.0748 3.46609 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='body'>
+          <pose>11.0748 3.46609 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='KitchenCountertop'>
+        <pose>6.86344 3.35285 -5e-06 -5e-06 1e-06 -1.57044</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose>3.54389 -0.349057 0.774999 4.4e-05 3e-06 -0.956101</pose>
+          <pose>6.86344 3.35285 -5e-06 -5e-06 1e-06 -1.57044</pose>
           <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 -9.8 -0 -0 -0</acceleration>
+          <acceleration>5e-06 -1e-06 -5.79018 -1.6833 -1.4509 3.14159</acceleration>
+          <wrench>5e-06 -1e-06 -5.79018 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='KitchenCountertop_clone'>
+        <pose>9.15491 3.36293 -5e-06 -5e-06 1e-06 -1.57044</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>9.15491 3.36293 -5e-06 -5e-06 1e-06 -1.57044</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>5e-06 -1e-06 -5.79018 -1.6833 -1.4509 3.14159</acceleration>
+          <wrench>5e-06 -1e-06 -5.79018 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='KitchenCountertop_clone_clone'>
+        <pose>6.86691 1.38144 -5e-06 -5e-06 1e-06 1.56676</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>6.86691 1.38144 -5e-06 -5e-06 1e-06 1.56676</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-5e-06 1e-06 -5.79018 1.66313 1.44444 3.14159</acceleration>
+          <wrench>-5e-06 1e-06 -5.79018 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='KitchenCountertop_clone_clone_clone'>
+        <pose>9.15986 1.38391 -5e-06 -5e-06 1e-06 1.57318</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>9.15986 1.38391 -5e-06 -5e-06 1e-06 1.57318</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-5e-06 1e-06 -5.79018 1.69262 1.45385 -3.14159</acceleration>
+          <wrench>-5e-06 1e-06 -5.79018 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='bowl'>
+        <pose>10.2735 -1.30234 1.015 8e-06 -0 0.002462</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>10.2735 -1.30234 1.015 8e-06 -0 0.002462</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 -9.8 0 -0 0</acceleration>
           <wrench>0 0 -0.98 0 -0 0</wrench>
         </link>
       </model>
-      <model name='bowl_2_clone_0'>
-        <pose>-4.85531 -0.182319 0.775002 -1.6e-05 1.4e-05 -3.7e-05</pose>
+      <model name='bowl_2_clone'>
+        <pose>3.54389 -0.349056 0.775002 2.1e-05 1e-06 -0.956107</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose>-4.85531 -0.182319 0.775002 -1.6e-05 1.4e-05 -3.7e-05</pose>
+          <pose>3.54389 -0.349056 0.775002 2.1e-05 1e-06 -0.956107</pose>
           <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>-0.895967 -1.01362 11.7376 2.75014 0.564867 0.367788</acceleration>
-          <wrench>-0.089597 -0.101362 1.17376 0 -0 0</wrench>
+          <acceleration>0.3741 0.289259 22.4477 -0.822399 0.621099 -3.14065</acceleration>
+          <wrench>0.03741 0.028926 2.24477 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='bowl_2_clone_0'>
+        <pose>-4.85531 -0.18232 0.774999 -1.7e-05 -2e-06 -1.3e-05</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>-4.85531 -0.18232 0.774999 -1.7e-05 -2e-06 -1.3e-05</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0.201814 1.49931 -7.16637 2.30958 1.12885 0.015057</acceleration>
+          <wrench>-0.020181 0.149931 -0.716637 0 -0 0</wrench>
         </link>
       </model>
       <model name='bowl_2_clone_1'>
-        <pose>-5.20285 -0.564683 0.775 4.5e-05 6e-06 -5.9e-05</pose>
+        <pose>-5.20285 -0.564683 0.77499 0 0 -6.2e-05</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose>-5.20285 -0.564683 0.775 4.5e-05 6e-06 -5.9e-05</pose>
+          <pose>-5.20285 -0.564683 0.77499 0 0 -6.2e-05</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 -9.8 0 -0 0</acceleration>
+          <wrench>0 0 -0.98 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='bowl_clone'>
+        <pose>10.2609 -0.713444 1.01501 6e-06 -6.5e-05 -0.017373</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>10.2609 -0.713444 1.01501 6e-06 -6.5e-05 -0.017373</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>1.32892 0.09675 17.5851 -2.45213 1.34248 -3.12993</acceleration>
+          <wrench>0.132892 0.009675 1.75851 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='bowl_clone_0'>
+        <pose>10.2693 -0.910179 1.015 1.5e-05 7e-06 0.030225</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>10.2693 -0.910179 1.015 1.5e-05 7e-06 0.030225</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0 0 -9.8 -7e-06 -4e-06 0</acceleration>
+          <wrench>-0 0 -0.98 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='bowl_clone_1'>
+        <pose>10.2682 -1.10626 1.01501 -7e-05 2e-06 0.004458</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>10.2682 -1.10626 1.01501 -7e-05 2e-06 0.004458</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0 0 19.6 -1.8e-05 -3e-06 0</acceleration>
+          <wrench>-0 0 1.96 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='bowl_clone_2'>
+        <pose>10.0649 -0.711387 1.015 3e-05 -0 0.007969</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>10.0649 -0.711387 1.015 3e-05 -0 0.007969</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0.002245 0.839147 10.763 1.37647 -0.128829 9.8e-05</acceleration>
+          <wrench>-0.000225 0.083915 1.0763 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='bowl_clone_3'>
+        <pose>10.0688 -0.90753 1.015 0 -0 -0.052105</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>10.0688 -0.90753 1.015 0 -0 -0.052105</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 -9.8 0 -0 0</acceleration>
+          <wrench>0 0 -0.98 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='bowl_clone_4'>
+        <pose>10.0656 -1.10586 1.015 -1.3e-05 -1e-06 -0.072911</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>10.0656 -1.10586 1.015 -1.3e-05 -1e-06 -0.072911</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0.010768 -0.409858 22.1399 -1.26354 0.618842 0.000656</acceleration>
+          <wrench>0.001077 -0.040986 2.214 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='bowl_clone_5'>
+        <pose>10.0681 -1.30199 1.01499 1.5e-05 -0 0.011048</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>10.0681 -1.30199 1.01499 1.5e-05 -0 0.011048</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 -9.8 0 -0 0</acceleration>
           <wrench>0 0 -0.98 0 -0 0</wrench>
@@ -1866,44 +2006,294 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='coke_can_clone_0_clone'>
-        <pose>3.63203 -0.460658 0.772424 -0.007819 0.002798 0.015546</pose>
+      <model name='coke_can'>
+        <pose>5.99284 -1.34542 1.01242 -0.007308 0.002565 -0.015171</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose>3.63203 -0.460658 0.772424 -0.007819 0.002798 0.015546</pose>
+          <pose>5.99284 -1.34542 1.01242 -0.007308 0.002565 -0.015171</pose>
           <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0.010284 -0.04312 0.001943 0.749653 0.179841 -0.017036</acceleration>
-          <wrench>0.004011 -0.016817 0.000758 0 -0 0</wrench>
+          <acceleration>-0.016508 -0.069999 0.005514 1.21375 -0.283767 -0.148998</acceleration>
+          <wrench>-0.006438 -0.0273 0.00215 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='coke_can_clone'>
+        <pose>5.9882 -1.25833 1.01243 -0.010686 0.003833 -0.014916</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>5.9882 -1.25833 1.01243 -0.010686 0.003833 -0.014916</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0.11705 0.405743 -0.042815 2.36318 1.09655 -2.88056</acceleration>
+          <wrench>0.045649 0.15824 -0.016698 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='coke_can_clone_0'>
+        <pose>5.9874 -1.17744 1.01243 -0.00968 0.003465 -0.014821</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>5.9874 -1.17744 1.01243 -0.00968 0.003465 -0.014821</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0.026049 -0.22075 0.023816 -2.43966 -0.452249 0.080007</acceleration>
+          <wrench>-0.010159 -0.086093 0.009288 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='coke_can_clone_0_clone'>
+        <pose>3.63201 -0.460681 0.772434 -0.011204 0.004016 0.008551</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>3.63201 -0.460681 0.772434 -0.011204 0.004016 0.008551</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0.072364 -0.093876 -0.007377 1.63432 -1.26056 -0.004802</acceleration>
+          <wrench>-0.028222 -0.036612 -0.002877 0 -0 0</wrench>
         </link>
       </model>
       <model name='coke_can_clone_0_clone_1'>
-        <pose>3.68327 -0.064889 0.772423 -0.007679 0.002744 0.001721</pose>
+        <pose>3.68325 -0.064913 0.772434 -0.011211 0.004015 -0.005845</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose>3.68327 -0.064889 0.772423 -0.007679 0.002744 0.001721</pose>
+          <pose>3.68325 -0.064913 0.772434 -0.011211 0.004015 -0.005845</pose>
           <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>-0.019348 -0.069296 0.005685 1.2024 -0.333766 -0.137257</acceleration>
-          <wrench>-0.007546 -0.027026 0.002217 0 -0 0</wrench>
+          <acceleration>0.087193 -0.095227 -0.00704 1.69508 1.50083 0.95045</acceleration>
+          <wrench>0.034005 -0.037139 -0.002746 0 -0 0</wrench>
         </link>
       </model>
       <model name='coke_can_clone_0_clone_2'>
-        <pose>4.39619 4.27975 -0.003487 -0.033711 0.00894 0.198935</pose>
+        <pose>4.39619 4.27974 -0.003472 -0.036724 0.008267 0.198821</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose>4.39619 4.27975 -0.003487 -0.033711 0.00894 0.198935</pose>
+          <pose>4.39619 4.27974 -0.003472 -0.036724 0.008267 0.198821</pose>
           <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>4.2e-05 -0.074329 0.002812 1.31324 0.00055 0.009615</acceleration>
-          <wrench>1.6e-05 -0.028988 0.001097 0 -0 0</wrench>
+          <acceleration>-0.020646 0.102279 -0.0087 -1.8068 -0.368099 -0.042224</acceleration>
+          <wrench>-0.008052 0.039889 -0.003393 0 -0 0</wrench>
         </link>
       </model>
       <model name='coke_can_clone_0_clone_4'>
-        <pose>3.98724 2.71921 0.772424 -0.008145 0.002909 0.008189</pose>
+        <pose>3.98722 2.71919 0.772434 -0.011201 0.004011 0.000612</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose>3.98724 2.71921 0.772424 -0.008145 0.002909 0.008189</pose>
+          <pose>3.98722 2.71919 0.772434 -0.011201 0.004011 0.000612</pose>
           <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>-0.048628 -0.111668 0.00526 1.95114 -0.852617 0.144333</acceleration>
-          <wrench>-0.018965 -0.04355 0.002051 0 -0 0</wrench>
+          <acceleration>0.054643 -0.112112 -0.008816 1.93518 0.963463 -0.355857</acceleration>
+          <wrench>0.021311 -0.043724 -0.003438 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='coke_can_clone_1'>
+        <pose>5.9849 -1.0967 1.01241 -0.003437 0.000671 0.039908</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>5.9849 -1.0967 1.01241 -0.003437 0.000671 0.039908</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0.003848 0.009383 -0.030463 -0.162911 0.066225 -0.016081</acceleration>
+          <wrench>0.001501 0.00366 -0.01188 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='coke_can_clone_10'>
+        <pose>6.05593 -1.24675 1.01242 -0.008281 0.002953 -0.013679</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>6.05593 -1.24675 1.01242 -0.008281 0.002953 -0.013679</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0.023463 -0.10255 0.006199 1.79147 -0.415732 0.190348</acceleration>
+          <wrench>-0.00915 -0.039995 0.002417 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='coke_can_clone_11'>
+        <pose>6.1355 -1.24917 1.01242 -0.007525 0.002677 -0.013575</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>6.1355 -1.24917 1.01242 -0.007525 0.002677 -0.013575</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0.019036 -0.100895 0.004892 1.76361 -0.340345 0.225165</acceleration>
+          <wrench>-0.007424 -0.039349 0.001908 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='coke_can_clone_12'>
+        <pose>6.20867 -1.24214 1.01242 -0.007482 0.00267 -0.013509</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>6.20867 -1.24214 1.01242 -0.007482 0.00267 -0.013509</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0.058824 0.233693 0.004345 2.21565 -1.03076 -0.063595</acceleration>
+          <wrench>-0.022941 0.09114 0.001694 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='coke_can_clone_13'>
+        <pose>6.27815 -1.24048 1.01242 -0.00786 0.001136 -0.013342</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>6.27815 -1.24048 1.01242 -0.00786 0.001136 -0.013342</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0.00013 -8.2e-05 -6e-06 0.001428 0.002252 0.000404</acceleration>
+          <wrench>5.1e-05 -3.2e-05 -2e-06 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='coke_can_clone_14'>
+        <pose>6.06815 -1.34067 1.01243 -0.011203 0.004012 -0.012855</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>6.06815 -1.34067 1.01243 -0.011203 0.004012 -0.012855</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0.061047 -0.08573 0.000505 1.51097 1.04798 0.694136</acceleration>
+          <wrench>0.023809 -0.033435 0.000197 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='coke_can_clone_15'>
+        <pose>6.14091 -1.33368 1.01243 -0.011198 0.004019 -0.012862</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>6.14091 -1.33368 1.01243 -0.011198 0.004019 -0.012862</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0.436013 -0.022015 0.015851 0.377642 -1.32074 -0.322849</acceleration>
+          <wrench>-0.170045 -0.008586 0.006182 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='coke_can_clone_16'>
+        <pose>6.21376 -1.32666 1.01243 -0.00969 0.003455 -0.012765</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>6.21376 -1.32666 1.01243 -0.00969 0.003455 -0.012765</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0.03577 -0.194003 -0.006175 -2.90557 0.628867 0.087443</acceleration>
+          <wrench>0.01395 -0.075661 -0.002408 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='coke_can_clone_17'>
+        <pose>6.28196 -1.32012 1.01243 -0.009592 0.003424 -0.012692</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>6.28196 -1.32012 1.01243 -0.009592 0.003424 -0.012692</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0.003711 -0.047376 0.003439 0.822684 -0.063239 -0.060411</acceleration>
+          <wrench>-0.001447 -0.018476 0.001341 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='coke_can_clone_18'>
+        <pose>5.98481 -1.03016 1.01257 -0.008295 -0.033035 -0.0305</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>5.98481 -1.03016 1.01257 -0.008295 -0.033035 -0.0305</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0.007134 -0.004604 0.026191 0.082193 -0.121996 0.131496</acceleration>
+          <wrench>-0.002782 -0.001795 0.010215 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='coke_can_clone_19'>
+        <pose>6.05152 -1.029 1.01258 -0.091977 -0.034246 0.04276</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>6.05152 -1.029 1.01258 -0.091977 -0.034246 0.04276</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0.000392 0.015334 0.033475 -0.393802 -0.104509 0.532188</acceleration>
+          <wrench>-0.000153 0.00598 0.013055 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='coke_can_clone_2'>
+        <pose>6.05129 -1.09263 1.01241 -0.013156 -0.000146 0.266744</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>6.05129 -1.09263 1.01241 -0.013156 -0.000146 0.266744</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0.003585 0.000743 -0.027031 -0.015459 0.071529 -0.146655</acceleration>
+          <wrench>0.001398 0.00029 -0.010542 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='coke_can_clone_20'>
+        <pose>6.12968 -1.02524 1.01228 -0.001564 -0.028797 -0.014316</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>6.12968 -1.02524 1.01228 -0.001564 -0.028797 -0.014316</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0.000779 -0.000456 0.000352 0.00811 -0.013066 -0.007778</acceleration>
+          <wrench>-0.000304 -0.000178 0.000137 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='coke_can_clone_21'>
+        <pose>6.1955 -1.02737 1.01147 -0.022044 0.007896 -0.010507</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>6.1955 -1.02737 1.01147 -0.022044 0.007896 -0.010507</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0.020144 0.002673 -0.005868 -0.085979 -0.420429 0.185996</acceleration>
+          <wrench>-0.007856 0.001043 -0.002289 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='coke_can_clone_22'>
+        <pose>6.26733 -1.02713 1.01163 -0.00179 -0.033606 -0.030819</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>6.26733 -1.02713 1.01163 -0.00179 -0.033606 -0.030819</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0.025335 -0.051029 -0.057469 0.907658 -0.485745 0.072627</acceleration>
+          <wrench>-0.00988 -0.019901 -0.022413 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='coke_can_clone_3'>
+        <pose>6.1269 -1.09243 1.01244 -0.005584 0.002632 0.048786</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>6.1269 -1.09243 1.01244 -0.005584 0.002632 0.048786</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0.001314 -0.000365 -0.000125 0.006072 -0.023694 -0.017857</acceleration>
+          <wrench>-0.000512 -0.000142 -4.9e-05 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='coke_can_clone_4'>
+        <pose>6.20214 -1.09222 1.01232 0.004507 -0.024228 -0.000554</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>6.20214 -1.09222 1.01232 0.004507 -0.024228 -0.000554</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0.007841 0.003476 0.00051 -0.061403 -0.139803 0.123613</acceleration>
+          <wrench>-0.003058 0.001356 0.000199 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='coke_can_clone_5'>
+        <pose>6.27125 -1.09286 1.01266 0.031989 -0.003457 0.048237</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>6.27125 -1.09286 1.01266 0.031989 -0.003457 0.048237</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0.071125 -0.081538 0.064074 1.37452 1.30872 0.450691</acceleration>
+          <wrench>0.027739 -0.0318 0.024989 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='coke_can_clone_6'>
+        <pose>6.061 -1.17037 1.01242 -0.008103 0.00104 -0.014334</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>6.061 -1.17037 1.01242 -0.008103 0.00104 -0.014334</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0.000111 -7.7e-05 -5e-06 0.001356 0.001926 0.000361</acceleration>
+          <wrench>4.3e-05 -3e-05 -2e-06 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='coke_can_clone_7'>
+        <pose>6.13632 -1.1733 1.01241 -0.010495 0.001702 -0.013853</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>6.13632 -1.1733 1.01241 -0.010495 0.001702 -0.013853</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0.000328 -0.000526 5.8e-05 0.009157 0.005738 -0.001454</acceleration>
+          <wrench>0.000128 -0.000205 2.2e-05 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='coke_can_clone_8'>
+        <pose>6.21072 -1.17124 1.01243 -0.010914 0.003911 -0.013812</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>6.21072 -1.17124 1.01243 -0.010914 0.003911 -0.013812</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0.043913 -0.188244 -0.00481 -3.01013 0.774303 -0.025413</acceleration>
+          <wrench>0.017126 -0.073415 -0.001876 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='coke_can_clone_9'>
+        <pose>6.27966 -1.16458 1.01241 -0.010478 0.001808 -0.013738</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>6.27966 -1.16458 1.01241 -0.010478 0.001808 -0.013738</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>4.6e-05 -0.000413 3e-05 0.007248 0.000772 0.002476</acceleration>
+          <wrench>1.8e-05 -0.000161 1.2e-05 0 -0 0</wrench>
         </link>
       </model>
       <model name='ground_plane'>
@@ -2076,7 +2466,7 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose>-4.27645 -14.5073 22.0041 -0 1.2066 1.78667</pose>
+        <pose>9.93672 -11.4656 22.1535 0 1.1586 1.66667</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>
@@ -3993,5 +4383,2088 @@
       <device>default</device>
     </audio>
     <wind/>
+    <model name='Fridge'>
+      <static>1</static>
+      <link name='body'>
+        <pose>0 0 0 0 -0 0</pose>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://Fridge/meshes/Fridge.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://Fridge/meshes/Fridge_Col.obj</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>11.6294 3.41172 0 0 -0 0</pose>
+    </model>
+    <model name='Fridge_0'>
+      <static>1</static>
+      <link name='body'>
+        <pose>0 0 0 0 -0 0</pose>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://Fridge/meshes/Fridge.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://Fridge/meshes/Fridge_Col.obj</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>11.0353 3.42339 0 0 -0 0</pose>
+    </model>
+    <model name='KitchenCountertop'>
+      <link name='link'>
+        <pose>0 0 0 0 -0 0</pose>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://KitchenCountertop/meshes/KitchenCountertop.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://KitchenCountertop/meshes/KitchenCountertop.obj</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <self_collide>0</self_collide>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>6.7261 2.28533 0 0 -0 0</pose>
+    </model>
+    <model name='KitchenCountertop_clone'>
+      <link name='link'>
+        <pose>0 0 0 0 -0 0</pose>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://KitchenCountertop/meshes/KitchenCountertop.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://KitchenCountertop/meshes/KitchenCountertop.obj</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <self_collide>0</self_collide>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>9.15491 3.36293 -1e-06 2e-06 2e-06 -1.57044</pose>
+    </model>
+    <model name='KitchenCountertop_clone_clone'>
+      <link name='link'>
+        <pose>0 0 0 0 -0 0</pose>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://KitchenCountertop/meshes/KitchenCountertop.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://KitchenCountertop/meshes/KitchenCountertop.obj</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <self_collide>0</self_collide>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>6.87329 1.37989 1e-06 -1e-06 1e-06 -1.57044</pose>
+    </model>
+    <model name='KitchenCountertop_clone_clone_clone'>
+      <link name='link'>
+        <pose>0 0 0 0 -0 0</pose>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://KitchenCountertop/meshes/KitchenCountertop.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://KitchenCountertop/meshes/KitchenCountertop.obj</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <self_collide>0</self_collide>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>9.16101 1.38576 -9e-06 1e-06 -1e-06 1.57052</pose>
+    </model>
+    <model name='coke_can'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.06 0 -0 0</pose>
+          <mass>0.39</mass>
+          <inertia>
+            <ixx>0.00055575</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00055575</iyy>
+            <iyz>0</iyz>
+            <izz>0.0001755</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.1</max_vel>
+              </ode>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>6.15588 -1.15105 0 0 -0 0</pose>
+    </model>
+    <model name='coke_can_clone'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.06 0 -0 0</pose>
+          <mass>0.39</mass>
+          <inertia>
+            <ixx>0.00055575</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00055575</iyy>
+            <iyz>0</iyz>
+            <izz>0.0001755</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.1</max_vel>
+              </ode>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>5.98822 -1.25831 1.01242 -0.008034 0.002858 -0.008984</pose>
+    </model>
+    <model name='coke_can_clone_0'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.06 0 -0 0</pose>
+          <mass>0.39</mass>
+          <inertia>
+            <ixx>0.00055575</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00055575</iyy>
+            <iyz>0</iyz>
+            <izz>0.0001755</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.1</max_vel>
+              </ode>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>5.98742 -1.17743 1.01242 -0.008034 0.002858 -0.008984</pose>
+    </model>
+    <model name='coke_can_clone_1'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.06 0 -0 0</pose>
+          <mass>0.39</mass>
+          <inertia>
+            <ixx>0.00055575</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00055575</iyy>
+            <iyz>0</iyz>
+            <izz>0.0001755</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.1</max_vel>
+              </ode>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>5.98568 -1.09068 1.01242 -0.008034 0.002858 -0.008984</pose>
+    </model>
+    <model name='coke_can_clone_2'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.06 0 -0 0</pose>
+          <mass>0.39</mass>
+          <inertia>
+            <ixx>0.00055575</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00055575</iyy>
+            <iyz>0</iyz>
+            <izz>0.0001755</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.1</max_vel>
+              </ode>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>6.05133 -1.08949 1.01242 -0.008034 0.002858 -0.008984</pose>
+    </model>
+    <model name='coke_can_clone_3'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.06 0 -0 0</pose>
+          <mass>0.39</mass>
+          <inertia>
+            <ixx>0.00055575</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00055575</iyy>
+            <iyz>0</iyz>
+            <izz>0.0001755</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.1</max_vel>
+              </ode>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>6.12708 -1.09249 1.01242 -0.008034 0.002858 -0.008984</pose>
+    </model>
+    <model name='coke_can_clone_4'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.06 0 -0 0</pose>
+          <mass>0.39</mass>
+          <inertia>
+            <ixx>0.00055575</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00055575</iyy>
+            <iyz>0</iyz>
+            <izz>0.0001755</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.1</max_vel>
+              </ode>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>6.20185 -1.09045 1.01242 -0.008034 0.002858 -0.008984</pose>
+    </model>
+    <model name='coke_can_clone_5'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.06 0 -0 0</pose>
+          <mass>0.39</mass>
+          <inertia>
+            <ixx>0.00055575</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00055575</iyy>
+            <iyz>0</iyz>
+            <izz>0.0001755</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.1</max_vel>
+              </ode>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>6.27192 -1.08882 1.01242 -0.008034 0.002858 -0.008984</pose>
+    </model>
+    <model name='coke_can_clone_6'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.06 0 -0 0</pose>
+          <mass>0.39</mass>
+          <inertia>
+            <ixx>0.00055575</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00055575</iyy>
+            <iyz>0</iyz>
+            <izz>0.0001755</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.1</max_vel>
+              </ode>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>6.06101 -1.17036 1.01242 -0.008034 0.002858 -0.008984</pose>
+    </model>
+    <model name='coke_can_clone_7'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.06 0 -0 0</pose>
+          <mass>0.39</mass>
+          <inertia>
+            <ixx>0.00055575</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00055575</iyy>
+            <iyz>0</iyz>
+            <izz>0.0001755</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.1</max_vel>
+              </ode>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>6.13633 -1.17329 1.01242 -0.008034 0.002858 -0.008984</pose>
+    </model>
+    <model name='coke_can_clone_8'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.06 0 -0 0</pose>
+          <mass>0.39</mass>
+          <inertia>
+            <ixx>0.00055575</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00055575</iyy>
+            <iyz>0</iyz>
+            <izz>0.0001755</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.1</max_vel>
+              </ode>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>6.21073 -1.17122 1.01242 -0.008034 0.002858 -0.008984</pose>
+    </model>
+    <model name='coke_can_clone_9'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.06 0 -0 0</pose>
+          <mass>0.39</mass>
+          <inertia>
+            <ixx>0.00055575</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00055575</iyy>
+            <iyz>0</iyz>
+            <izz>0.0001755</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.1</max_vel>
+              </ode>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>6.27967 -1.16457 1.01242 -0.008034 0.002858 -0.008984</pose>
+    </model>
+    <model name='coke_can_clone_10'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.06 0 -0 0</pose>
+          <mass>0.39</mass>
+          <inertia>
+            <ixx>0.00055575</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00055575</iyy>
+            <iyz>0</iyz>
+            <izz>0.0001755</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.1</max_vel>
+              </ode>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>6.05594 -1.24674 1.01242 -0.008034 0.002858 -0.008984</pose>
+    </model>
+    <model name='coke_can_clone_11'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.06 0 -0 0</pose>
+          <mass>0.39</mass>
+          <inertia>
+            <ixx>0.00055575</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00055575</iyy>
+            <iyz>0</iyz>
+            <izz>0.0001755</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.1</max_vel>
+              </ode>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>6.13551 -1.24916 1.01242 -0.008034 0.002858 -0.008984</pose>
+    </model>
+    <model name='coke_can_clone_12'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.06 0 -0 0</pose>
+          <mass>0.39</mass>
+          <inertia>
+            <ixx>0.00055575</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00055575</iyy>
+            <iyz>0</iyz>
+            <izz>0.0001755</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.1</max_vel>
+              </ode>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>6.20868 -1.24213 1.01242 -0.008034 0.002858 -0.008984</pose>
+    </model>
+    <model name='coke_can_clone_13'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.06 0 -0 0</pose>
+          <mass>0.39</mass>
+          <inertia>
+            <ixx>0.00055575</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00055575</iyy>
+            <iyz>0</iyz>
+            <izz>0.0001755</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.1</max_vel>
+              </ode>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>6.27816 -1.24047 1.01242 -0.008034 0.002858 -0.008984</pose>
+    </model>
+    <model name='coke_can_clone_14'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.06 0 -0 0</pose>
+          <mass>0.39</mass>
+          <inertia>
+            <ixx>0.00055575</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00055575</iyy>
+            <iyz>0</iyz>
+            <izz>0.0001755</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.1</max_vel>
+              </ode>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>6.06816 -1.34066 1.01242 -0.008034 0.002858 -0.008984</pose>
+    </model>
+    <model name='coke_can_clone_15'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.06 0 -0 0</pose>
+          <mass>0.39</mass>
+          <inertia>
+            <ixx>0.00055575</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00055575</iyy>
+            <iyz>0</iyz>
+            <izz>0.0001755</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.1</max_vel>
+              </ode>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>6.14092 -1.33367 1.01242 -0.008034 0.002858 -0.008984</pose>
+    </model>
+    <model name='coke_can_clone_16'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.06 0 -0 0</pose>
+          <mass>0.39</mass>
+          <inertia>
+            <ixx>0.00055575</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00055575</iyy>
+            <iyz>0</iyz>
+            <izz>0.0001755</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.1</max_vel>
+              </ode>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>6.21377 -1.32665 1.01242 -0.008034 0.002858 -0.008984</pose>
+    </model>
+    <model name='coke_can_clone_17'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.06 0 -0 0</pose>
+          <mass>0.39</mass>
+          <inertia>
+            <ixx>0.00055575</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00055575</iyy>
+            <iyz>0</iyz>
+            <izz>0.0001755</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.1</max_vel>
+              </ode>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>6.28197 -1.32011 1.01242 -0.008034 0.002858 -0.008984</pose>
+    </model>
+    <model name='coke_can_clone_18'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.06 0 -0 0</pose>
+          <mass>0.39</mass>
+          <inertia>
+            <ixx>0.00055575</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00055575</iyy>
+            <iyz>0</iyz>
+            <izz>0.0001755</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.1</max_vel>
+              </ode>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>5.98478 -1.03399 1.01242 -0.008034 0.002858 -0.008984</pose>
+    </model>
+    <model name='coke_can_clone_19'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.06 0 -0 0</pose>
+          <mass>0.39</mass>
+          <inertia>
+            <ixx>0.00055575</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00055575</iyy>
+            <iyz>0</iyz>
+            <izz>0.0001755</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.1</max_vel>
+              </ode>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>6.05071 -1.03283 1.01242 -0.008034 0.002858 -0.008984</pose>
+    </model>
+    <model name='coke_can_clone_20'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.06 0 -0 0</pose>
+          <mass>0.39</mass>
+          <inertia>
+            <ixx>0.00055575</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00055575</iyy>
+            <iyz>0</iyz>
+            <izz>0.0001755</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.1</max_vel>
+              </ode>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>6.12955 -1.02527 1.01242 -0.008034 0.002858 -0.008984</pose>
+    </model>
+    <model name='coke_can_clone_21'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.06 0 -0 0</pose>
+          <mass>0.39</mass>
+          <inertia>
+            <ixx>0.00055575</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00055575</iyy>
+            <iyz>0</iyz>
+            <izz>0.0001755</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.1</max_vel>
+              </ode>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>6.19627 -1.0292 1.01242 -0.008034 0.002858 -0.008984</pose>
+    </model>
+    <model name='coke_can_clone_22'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.06 0 -0 0</pose>
+          <mass>0.39</mass>
+          <inertia>
+            <ixx>0.00055575</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00055575</iyy>
+            <iyz>0</iyz>
+            <izz>0.0001755</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1e+07</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.1</max_vel>
+              </ode>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0.003937 0.004724 -0.18 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://coke_can/meshes/coke_can.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>6.26749 -1.03264 1.01242 -0.008034 0.002858 -0.008984</pose>
+    </model>
+    <model name='bowl'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.0175 0 -0 0</pose>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>0.000250308</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.000250308</iyy>
+            <iyz>0</iyz>
+            <izz>0.0004802</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0 0 0.0175 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.098</radius>
+              <length>0.035</length>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://bowl/meshes/bowl.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>10.1506 -1.22355 0 0 -0 0</pose>
+    </model>
+    <model name='bowl_clone'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.0175 0 -0 0</pose>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>0.000250308</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.000250308</iyy>
+            <iyz>0</iyz>
+            <izz>0.0004802</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0 0 0.0175 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.098</radius>
+              <length>0.035</length>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://bowl/meshes/bowl.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>10.2815 -0.664614 1.015 4.4e-05 2.6e-05 -6.3e-05</pose>
+    </model>
+    <model name='bowl_clone_0'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.0175 0 -0 0</pose>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>0.000250308</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.000250308</iyy>
+            <iyz>0</iyz>
+            <izz>0.0004802</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0 0 0.0175 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.098</radius>
+              <length>0.035</length>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://bowl/meshes/bowl.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>10.2805 -0.862836 1.015 4.4e-05 2.6e-05 -6.3e-05</pose>
+    </model>
+    <model name='bowl_clone_1'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.0175 0 -0 0</pose>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>0.000250308</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.000250308</iyy>
+            <iyz>0</iyz>
+            <izz>0.0004802</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0 0 0.0175 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.098</radius>
+              <length>0.035</length>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://bowl/meshes/bowl.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>10.2832 -1.05197 1.015 4.4e-05 2.6e-05 -6.3e-05</pose>
+    </model>
+    <model name='bowl_clone_2'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.0175 0 -0 0</pose>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>0.000250308</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.000250308</iyy>
+            <iyz>0</iyz>
+            <izz>0.0004802</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0 0 0.0175 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.098</radius>
+              <length>0.035</length>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://bowl/meshes/bowl.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>10.0669 -0.70358 1.01501 -6.9e-05 -3e-06 -0.000439</pose>
+    </model>
+    <model name='bowl_clone_3'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.0175 0 -0 0</pose>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>0.000250308</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.000250308</iyy>
+            <iyz>0</iyz>
+            <izz>0.0004802</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0 0 0.0175 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.098</radius>
+              <length>0.035</length>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://bowl/meshes/bowl.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>10.0771 -0.902575 1.015 -4.8e-05 -2e-06 -0.000439</pose>
+    </model>
+    <model name='bowl_clone_4'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.0175 0 -0 0</pose>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>0.000250308</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.000250308</iyy>
+            <iyz>0</iyz>
+            <izz>0.0004802</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0 0 0.0175 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.098</radius>
+              <length>0.035</length>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://bowl/meshes/bowl.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>10.0776 -1.10207 1.015 2.3e-05 1e-06 -0.000439</pose>
+    </model>
+    <model name='bowl_clone_5'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.0175 0 -0 0</pose>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>0.000250308</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.000250308</iyy>
+            <iyz>0</iyz>
+            <izz>0.0004802</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0 0 0.0175 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.098</radius>
+              <length>0.035</length>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://bowl/meshes/bowl.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>10.0834 -1.29746 1.01499 0 0 -0.000439</pose>
+    </model>
   </world>
 </sdf>
