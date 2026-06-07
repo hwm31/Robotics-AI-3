@@ -198,6 +198,7 @@ def generate_launch_description():
         spawn_robot2,
         base_to_link_tf,
         link_to_scan_tf,
+        nav2,
         safety_robot1,  # 기존 safety_controller 대신 교체
         action_robot1,  # 기존 move_server 대신 교체
         safety_robot2,  # 로봇 2용 추가
