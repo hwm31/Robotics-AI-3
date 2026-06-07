@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""LLM API 호출, JSON 파싱, 포맷/환각 필터링 및 fallback 예외 처리."""
+"""LLM API 호출, JSON 파싱, 의도(Intent) 분류 및 포맷 필터링 노드."""
 
 from __future__ import annotations
 
@@ -33,23 +33,13 @@ class LlmAgentNode(Node):
                 from openai import OpenAI
                 self._openai_client = OpenAI(api_key=self._api_key)
                 source = f'.env ({env_file})' if env_file else 'environment'
-                self.get_logger().info(
-                    f'OpenAI API enabled (model={self._model}, source={source}).'
-                )
+                self.get_logger().info(f'OpenAI API enabled (model={self._model}, source={source}).')
             except ImportError:
-                self.get_logger().error(
-                    'openai 패키지가 없습니다: pip install openai'
-                )
+                self.get_logger().error('openai 패키지가 없습니다: pip install openai')
                 self._api_key = ''
         else:
-            hint = (
-                'llm_serving_project_ws/.env 에 OPENAI_API_KEY를 설정하세요.'
-                if env_file is None
-                else f'{env_file} 에 OPENAI_API_KEY가 비어 있습니다.'
-            )
-            self.get_logger().warn(
-                f'OpenAI API 키 없음 — 스텁 모드로 동작합니다. {hint}'
-            )
+            hint = ('llm_serving_project_ws/.env 에 OPENAI_API_KEY를 설정하세요.' if env_file is None else f'{env_file} 에 OPENAI_API_KEY가 비어 있습니다.')
+            self.get_logger().warn(f'OpenAI API 키 없음 — 스텁 모드로 동작합니다. {hint}')
 
         share_dir = get_package_share_directory('llm_serving_core')
 
@@ -61,43 +51,26 @@ class LlmAgentNode(Node):
         with open(map_path, 'r', encoding='utf-8') as f:
             restaurant_map = yaml.safe_load(f)
 
-        self._table_names = [
-            t['name'] for t in restaurant_map.get('tables', [])
-        ]
+        self._table_names = [t['name'] for t in restaurant_map.get('tables', [])]
 
         menu_path = os.path.join(share_dir, 'config', 'menu_list.yaml')
         with open(menu_path, 'r', encoding='utf-8') as f:
             menu_data = yaml.safe_load(f)
 
         self._valid_items = self._load_menu_items(menu_data)
-
         self._guest_counts: list[int] = []
 
-        self.create_subscription(
-            TableStatus,
-            'table_status',
-            self._on_table_status,
-            10
-        )
-
-        self.command_sub = self.create_subscription(
-            String,
-            'user_command',
-            self._on_command,
-            10
-        )
-
+        self.create_subscription(TableStatus, 'table_status', self._on_table_status, 10)
+        self.command_sub = self.create_subscription(String, 'user_command', self._on_command, 10)
         self.task_pub = self.create_publisher(String, 'llm_task', 10)
 
-        self.get_logger().info('LLM agent node ready.')
+        self.get_logger().info('LLM agent node ready (Intent Classification Enabled).')
 
     def _load_menu_items(self, menu_data: dict) -> set[str]:
         items: set[str] = set()
-
         for category in menu_data.get('menu', {}).values():
             if isinstance(category, list):
                 items.update(category)
-
         return items
 
     def _on_table_status(self, msg: TableStatus):
@@ -106,14 +79,11 @@ class LlmAgentNode(Node):
     def _format_table_context(self) -> str:
         if not self._table_names:
             return 'No table information available.'
-
         lines = []
-
         for i, name in enumerate(self._table_names):
             count = self._guest_counts[i] if i < len(self._guest_counts) else 0
             state = f'{count} guests' if count > 0 else 'empty'
             lines.append(f'- {name}: {state}')
-
         return '\n'.join(lines)
 
     def _on_command(self, msg: String):
@@ -122,34 +92,27 @@ class LlmAgentNode(Node):
 
         if not user_text:
             self.get_logger().warn('Empty user command.')
-            print('Robot: Sorry, empty command is not supported.')
             return
 
         table_context = self._format_table_context()
         raw_response = self._call_llm(user_text, table_context)
         parsed = self._parse_response(raw_response)
 
-        # LLM 응답이 JSON으로 파싱되지 않으면 stub fallback 재시도
         if parsed is None and self._use_stub_fallback:
-            self.get_logger().warn(
-                'Failed to parse LLM response. Trying stub fallback.'
-            )
+            self.get_logger().warn('Failed to parse LLM response. Trying stub fallback.')
             fallback_response = self._call_stub(user_text)
             parsed = self._parse_response(fallback_response)
 
         if parsed is None:
-            self.get_logger().error(
-                'Failed to parse both LLM and fallback response.'
-            )
-            print('Robot: Sorry, I could not understand the command.')
+            self.get_logger().error('Failed to parse both LLM and fallback response.')
             return
 
-        validated = self._validate_order(parsed)
+        # 의도(Intent) 검증을 수행
+        validated = self._validate_intent(parsed)
 
-        if validated.get('action') == 'unknown':
+        if validated.get('intent') == 'unknown':
             reason = validated.get('reason', 'unknown error')
-            self.get_logger().warn(f'Order rejected: {reason}')
-            print(f'Robot: Sorry, {reason}')
+            self.get_logger().warn(f'Command rejected: {reason}')
             return
 
         out = String()
@@ -157,98 +120,61 @@ class LlmAgentNode(Node):
         self.task_pub.publish(out)
         self.get_logger().info(f'Published task: {out.data}')
 
-    def _validate_order(self, parsed: dict) -> dict:
+    def _validate_intent(self, parsed: dict) -> dict:
+        """LLM이 파싱한 JSON의 의도(greeting vs order)를 구분하고 필터링합니다."""
         if not isinstance(parsed, dict):
-            return {
-                'action': 'unknown',
-                'reason': 'LLM response format is not a JSON object',
-            }
+            return {'intent': 'unknown', 'reason': 'LLM response format is not a JSON object'}
 
-        if parsed.get('action') != 'order':
-            return {
-                'action': 'unknown',
-                'reason': parsed.get(
-                    'reason',
-                    'only food orders are supported'
-                ),
-            }
+        # 하위 호환성을 위해 'action' 키가 있으면 'intent'로 취급합니다.
+        intent = parsed.get('intent') or parsed.get('action', 'unknown')
 
-        # table 값 검증
-        # LLM이 "abc", None, 빈 문자열 등을 반환해도 시스템이 죽지 않게 처리
-        try:
-            table = int(parsed.get('table', 0))
-        except (TypeError, ValueError):
-            return {
-                'action': 'unknown',
-                'reason': f'invalid table value: {parsed.get("table")}',
-            }
+        # ==== 1. 안내 (Greeting) 검증 ====
+        if intent == 'greeting':
+            try:
+                people = int(parsed.get('people', 1))
+            except (TypeError, ValueError):
+                people = 1
+            if people <= 0:
+                people = 1
+            return {'intent': 'greeting', 'people': people}
 
-        # items 값 검증
-        items = parsed.get('items', [])
+        # ==== 2. 주문 (Order) 검증 ====
+        elif intent == 'order':
+            try:
+                table = int(parsed.get('table', 0))
+            except (TypeError, ValueError):
+                return {'intent': 'unknown', 'reason': f'invalid table value: {parsed.get("table")}'}
 
-        if isinstance(items, str):
-            items = [items]
+            items = parsed.get('items', [])
+            if isinstance(items, str):
+                items = [items]
+            if not isinstance(items, list):
+                return {'intent': 'unknown', 'reason': 'items must be a list'}
 
-        if not isinstance(items, list):
-            return {
-                'action': 'unknown',
-                'reason': 'items must be a list',
-            }
+            items = [str(item).strip() for item in items if str(item).strip()]
 
-        items = [
-            str(item).strip()
-            for item in items
-            if str(item).strip()
-        ]
+            if table <= 0 or table > len(self._table_names):
+                return {'intent': 'unknown', 'reason': f'invalid table number: {table}'}
 
-        if table <= 0 or table > len(self._table_names):
-            return {
-                'action': 'unknown',
-                'reason': f'invalid table number: {table}',
-            }
+            guest_count = self._guest_counts[table - 1] if table - 1 < len(self._guest_counts) else 0
+            if guest_count == 0:
+                return {'intent': 'unknown', 'reason': f'table {table} has no guests'}
 
-        guest_count = (
-            self._guest_counts[table - 1]
-            if table - 1 < len(self._guest_counts)
-            else 0
-        )
+            if not items:
+                return {'intent': 'unknown', 'reason': 'no menu items in the order'}
 
-        if guest_count == 0:
-            return {
-                'action': 'unknown',
-                'reason': f'table {table} has no guests',
-            }
+            invalid_items = [item for item in items if item not in self._valid_items]
+            if invalid_items:
+                return {'intent': 'unknown', 'reason': f'unknown menu items: {", ".join(invalid_items)}'}
 
-        if not items:
-            return {
-                'action': 'unknown',
-                'reason': 'no menu items in the order',
-            }
+            return {'intent': 'order', 'table': table, 'items': items}
 
-        invalid_items = [
-            item for item in items
-            if item not in self._valid_items
-        ]
-
-        if invalid_items:
-            return {
-                'action': 'unknown',
-                'reason': f'unknown menu items: {", ".join(invalid_items)}',
-            }
-
-        return {
-            'action': 'order',
-            'table': table,
-            'destination': 'kitchen',
-            'items': items,
-            'reason': '',
-        }
+        # ==== 3. 알 수 없는 의도 ====
+        else:
+            return {'intent': 'unknown', 'reason': f'unsupported intent: {intent}'}
 
     def _call_openai(self, user_text: str, table_context: str) -> str:
-        system_content = (
-            f'{self.system_prompt}\n\n## Current Tables\n{table_context}'
-        )
-
+        system_content = f'{self.system_prompt}\n\n## Current Tables\n{table_context}'
         response = self._openai_client.chat.completions.create(
             model=self._model,
             messages=[
@@ -258,28 +184,27 @@ class LlmAgentNode(Node):
             temperature=0,
             response_format={'type': 'json_object'},
         )
-
         return response.choices[0].message.content or ''
 
     def _call_stub(self, user_text: str) -> str:
         self.get_logger().warn('Using stub LLM response (API not configured).')
+        
+        # 스텁Fallback도 인사(greeting)를 간단히 처리할 수 있게 방어 로직 추가
+        if "명" in user_text and ("입장" in user_text or "왔" in user_text):
+            people = 2 # 기본값
+            for word in user_text.split():
+                if "명" in word:
+                    try:
+                        people = int(''.join(filter(str.isdigit, word)))
+                    except Exception:
+                        pass
+            return json.dumps({"intent": "greeting", "people": people}, ensure_ascii=False)
 
-        stub = parse_order_command(
-            user_text,
-            self._valid_items,
-            self._guest_counts
-        )
-
+        stub = parse_order_command(user_text, self._valid_items, self._guest_counts)
         if stub is not None:
             return stub
 
-        return json.dumps({
-            'action': 'unknown',
-            'table': 0,
-            'destination': 'kitchen',
-            'items': [],
-            'reason': 'could not understand the order',
-        }, ensure_ascii=False)
+        return json.dumps({'intent': 'unknown', 'reason': 'could not understand the command'}, ensure_ascii=False)
 
     def _call_llm(self, user_text: str, table_context: str) -> str:
         if self._openai_client is not None:
@@ -287,63 +212,43 @@ class LlmAgentNode(Node):
                 return self._call_openai(user_text, table_context)
             except Exception as exc:
                 self.get_logger().error(f'OpenAI API failed: {exc}')
-
                 if not self._use_stub_fallback:
                     raise
-
         return self._call_stub(user_text)
 
     def _parse_response(self, raw: str) -> dict | None:
         if raw is None:
-            self.get_logger().error('LLM response is None.')
             return None
-
         text = raw.strip()
-
         if not text:
-            self.get_logger().error('LLM response is empty.')
             return None
-
-        # ```json ... ``` 또는 ``` ... ``` 형태 제거
         if text.startswith('```'):
             text = text.split('\n', 1)[-1].rsplit('```', 1)[0].strip()
-
-        # LLM이 JSON 앞뒤에 설명을 붙였을 경우 JSON object만 추출
         if not text.startswith('{'):
             start = text.find('{')
             end = text.rfind('}')
-
             if start != -1 and end != -1 and start < end:
                 text = text[start:end + 1]
-
         try:
             parsed = json.loads(text)
         except json.JSONDecodeError as e:
             self.get_logger().error(f'JSON parse error: {e}')
-            self.get_logger().error(f'Raw response: {raw}')
             return None
-
         if not isinstance(parsed, dict):
-            self.get_logger().error('Parsed LLM response is not a JSON object.')
             return None
-
         return parsed
-
 
 def main(args=None):
     rclpy.init(args=args)
     node = LlmAgentNode()
-
     try:
         rclpy.spin(node)
     except KeyboardInterrupt:
         pass
     finally:
         node.destroy_node()
-
         if rclpy.ok():
             rclpy.shutdown()
-
 
 if __name__ == '__main__':
     main()
