@@ -59,8 +59,11 @@ class LlmAgentNode(Node):
 
         self._valid_items = self._load_menu_items(menu_data)
         self._guest_counts: list[int] = []
+        self._recent_assigned_table: int | None = None
+        self._allow_recent_table_order = False
 
         self.create_subscription(TableStatus, 'table_status', self._on_table_status, 10)
+        self.create_subscription(String, 'table_assignment', self._on_table_assignment, 10)
         self.command_sub = self.create_subscription(String, 'user_command', self._on_command, 10)
         self.task_pub = self.create_publisher(String, 'llm_task', 10)
 
@@ -76,6 +79,26 @@ class LlmAgentNode(Node):
     def _on_table_status(self, msg: TableStatus):
         self._guest_counts = list(msg.guest_counts)
 
+    def _on_table_assignment(self, msg: String):
+        try:
+            data = json.loads(msg.data)
+        except json.JSONDecodeError:
+            self.get_logger().warn(f'Invalid table_assignment JSON: {msg.data}')
+            return
+
+        if data.get('success') is False:
+            return
+
+        table = self._coerce_table_number(
+            data.get('table_id', data.get('table')))
+        if table is None:
+            return
+
+        self._recent_assigned_table = table
+        self._allow_recent_table_order = True
+        self.get_logger().info(
+            f'Recent assigned table set to table_{table} for next tableless order.')
+
     def _format_table_context(self) -> str:
         if not self._table_names:
             return 'No table information available.'
@@ -86,6 +109,17 @@ class LlmAgentNode(Node):
             lines.append(f'- {name}: {state}')
         return '\n'.join(lines)
 
+    def _format_recent_table_context(self) -> str:
+        if (
+            self._recent_assigned_table is None
+            or not self._allow_recent_table_order
+        ):
+            return 'None'
+        return (
+            f'table_{self._recent_assigned_table} '
+            '(usable_for_next_tableless_order=true)'
+        )
+
     def _on_command(self, msg: String):
         user_text = msg.data.strip()
         self.get_logger().info(f'Received command: {user_text}')
@@ -95,7 +129,8 @@ class LlmAgentNode(Node):
             return
 
         table_context = self._format_table_context()
-        raw_response = self._call_llm(user_text, table_context)
+        recent_context = self._format_recent_table_context()
+        raw_response = self._call_llm(user_text, table_context, recent_context)
         parsed = self._parse_response(raw_response)
 
         if parsed is None and self._use_stub_fallback:
@@ -114,6 +149,10 @@ class LlmAgentNode(Node):
             reason = validated.get('reason', 'unknown error')
             self.get_logger().warn(f'Command rejected: {reason}')
             return
+
+        if validated.get('intent') == 'order' and validated.get('used_recent_table'):
+            self._allow_recent_table_order = False
+            self.get_logger().info('Recent assigned table context consumed.')
 
         out = String()
         out.data = json.dumps(validated, ensure_ascii=False)
@@ -140,41 +179,197 @@ class LlmAgentNode(Node):
 
         # ==== 2. 주문 (Order) 검증 ====
         elif intent == 'order':
-            try:
-                table = int(parsed.get('table', 0))
-            except (TypeError, ValueError):
-                return {'intent': 'unknown', 'reason': f'invalid table value: {parsed.get("table")}'}
+            orders, used_recent_table, reason = self._normalize_orders(parsed)
+            if reason:
+                return {'intent': 'unknown', 'reason': reason}
 
-            items = parsed.get('items', [])
-            if isinstance(items, str):
-                items = [items]
-            if not isinstance(items, list):
-                return {'intent': 'unknown', 'reason': 'items must be a list'}
+            if not orders:
+                return {'intent': 'unknown', 'reason': 'no orders in the command'}
 
-            items = [str(item).strip() for item in items if str(item).strip()]
+            normalized = {
+                'intent': 'order',
+                'orders': orders,
+                'used_recent_table': used_recent_table,
+            }
+            if len(orders) == 1:
+                normalized['table'] = orders[0]['table']
+                normalized['items'] = orders[0]['expanded_items']
+                normalized['item_counts'] = orders[0]['items']
 
-            if table <= 0 or table > len(self._table_names):
-                return {'intent': 'unknown', 'reason': f'invalid table number: {table}'}
-
-            guest_count = self._guest_counts[table - 1] if table - 1 < len(self._guest_counts) else 0
-            if guest_count == 0:
-                return {'intent': 'unknown', 'reason': f'table {table} has no guests'}
-
-            if not items:
-                return {'intent': 'unknown', 'reason': 'no menu items in the order'}
-
-            invalid_items = [item for item in items if item not in self._valid_items]
-            if invalid_items:
-                return {'intent': 'unknown', 'reason': f'unknown menu items: {", ".join(invalid_items)}'}
-
-            return {'intent': 'order', 'table': table, 'items': items}
+            return normalized
 
         # ==== 3. 알 수 없는 의도 ====
         else:
             return {'intent': 'unknown', 'reason': f'unsupported intent: {intent}'}
 
-    def _call_openai(self, user_text: str, table_context: str) -> str:
-        system_content = f'{self.system_prompt}\n\n## Current Tables\n{table_context}'
+    def _coerce_table_number(self, value) -> int | None:
+        if value is None:
+            return None
+
+        if isinstance(value, int):
+            return value
+
+        text = str(value).strip()
+        if not text:
+            return None
+
+        if text.isdigit():
+            return int(text)
+
+        import re
+        match = re.search(r'(\d+)', text)
+        if match:
+            return int(match.group(1))
+
+        return None
+
+    def _infer_only_occupied_table(self) -> int | None:
+        occupied = [
+            i + 1 for i, count in enumerate(self._guest_counts) if count > 0
+        ]
+        if len(occupied) == 1:
+            return occupied[0]
+        return None
+
+    def _resolve_table(self, raw_table) -> tuple[int | None, bool, str | None]:
+        table = self._coerce_table_number(raw_table)
+        if table is not None:
+            return table, False, None
+
+        if (
+            self._recent_assigned_table is not None
+            and self._allow_recent_table_order
+        ):
+            return self._recent_assigned_table, True, None
+
+        inferred = self._infer_only_occupied_table()
+        if inferred is not None:
+            return inferred, False, None
+
+        return None, False, 'table number is unclear'
+
+    def _normalize_item_counts(self, raw_items) -> tuple[list[dict], str | None]:
+        if raw_items is None:
+            return [], 'items are missing'
+
+        if isinstance(raw_items, (str, dict)):
+            raw_items = [raw_items]
+
+        if not isinstance(raw_items, list):
+            return [], 'items must be a list'
+
+        counts: dict[str, int] = {}
+        order: list[str] = []
+
+        for raw in raw_items:
+            if isinstance(raw, str):
+                item = raw.strip()
+                count = 1
+            elif isinstance(raw, dict):
+                item = str(
+                    raw.get('item')
+                    or raw.get('name')
+                    or raw.get('menu')
+                    or ''
+                ).strip()
+                try:
+                    count = int(raw.get('count', 1))
+                except (TypeError, ValueError):
+                    return [], f'invalid count for item: {raw}'
+            else:
+                return [], f'invalid item entry: {raw}'
+
+            if not item:
+                return [], f'empty item entry: {raw}'
+            if item not in self._valid_items:
+                return [], f'unknown menu item: {item}'
+            if count <= 0:
+                return [], f'invalid count for {item}: {count}'
+
+            if item not in counts:
+                order.append(item)
+                counts[item] = 0
+            counts[item] += count
+
+        return [
+            {'item': item, 'count': counts[item]}
+            for item in order
+        ], None
+
+    def _expanded_items(self, item_counts: list[dict]) -> list[str]:
+        items: list[str] = []
+        for entry in item_counts:
+            items.extend([entry['item']] * int(entry['count']))
+        return items
+
+    def _normalize_orders(self, parsed: dict) -> tuple[list[dict], bool, str | None]:
+        raw_orders = parsed.get('orders')
+        if not raw_orders:
+            raw_orders = [{
+                'table': parsed.get('table'),
+                'items': parsed.get('item_counts', parsed.get('items')),
+            }]
+        elif isinstance(raw_orders, dict):
+            raw_orders = [raw_orders]
+
+        if not isinstance(raw_orders, list):
+            return [], False, 'orders must be a list'
+
+        orders: list[dict] = []
+        used_recent_table = False
+
+        for raw_order in raw_orders:
+            if not isinstance(raw_order, dict):
+                return [], used_recent_table, f'invalid order entry: {raw_order}'
+
+            table, used_recent, reason = self._resolve_table(
+                raw_order.get('table', parsed.get('table')))
+            if reason:
+                return [], used_recent_table, reason
+            if table is None:
+                return [], used_recent_table, 'table number is unclear'
+            used_recent_table = used_recent_table or used_recent
+
+            if table <= 0 or table > len(self._table_names):
+                return [], used_recent_table, f'invalid table number: {table}'
+
+            guest_count = self._guest_counts[table - 1] if table - 1 < len(self._guest_counts) else 0
+            if guest_count == 0:
+                return [], used_recent_table, f'table {table} has no guests'
+
+            raw_items = raw_order.get('items')
+            if raw_items is None and 'item' in raw_order:
+                raw_items = [raw_order]
+            if raw_items is None:
+                raw_items = raw_order.get('item_counts')
+
+            item_counts, item_error = self._normalize_item_counts(raw_items)
+            if item_error:
+                return [], used_recent_table, item_error
+
+            expanded_items = self._expanded_items(item_counts)
+            if not expanded_items:
+                return [], used_recent_table, 'no menu items in the order'
+
+            orders.append({
+                'table': table,
+                'items': item_counts,
+                'expanded_items': expanded_items,
+            })
+
+        return orders, used_recent_table, None
+
+    def _call_openai(
+        self,
+        user_text: str,
+        table_context: str,
+        recent_context: str,
+    ) -> str:
+        system_content = (
+            f'{self.system_prompt}\n\n'
+            f'## Current Tables\n{table_context}\n\n'
+            f'## Recent Assigned Table\n{recent_context}'
+        )
         response = self._openai_client.chat.completions.create(
             model=self._model,
             messages=[
@@ -206,10 +401,19 @@ class LlmAgentNode(Node):
 
         return json.dumps({'intent': 'unknown', 'reason': 'could not understand the command'}, ensure_ascii=False)
 
-    def _call_llm(self, user_text: str, table_context: str) -> str:
+    def _call_llm(
+        self,
+        user_text: str,
+        table_context: str,
+        recent_context: str,
+    ) -> str:
         if self._openai_client is not None:
             try:
-                return self._call_openai(user_text, table_context)
+                return self._call_openai(
+                    user_text,
+                    table_context,
+                    recent_context,
+                )
             except Exception as exc:
                 self.get_logger().error(f'OpenAI API failed: {exc}')
                 if not self._use_stub_fallback:

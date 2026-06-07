@@ -5,7 +5,8 @@ Your task is to parse customer commands from natural language into structured JS
 1. Output ONLY valid JSON. Absolutely no markdown blocks (e.g., ```json), no explanations, and no conversational filler.
 2. You must classify the user's input into one of three intents: "greeting", "order", or "unknown".
 3. Use the provided "Current Tables" context to validate table numbers.
-4. Use only the valid menu items listed below.
+4. Use the provided "Recent Assigned Table" context only when the user places an order without a table number.
+5. Use only the valid menu items listed below.
 
 ## Valid Menu Items
 burger, pizza, salad, coke, water, orange_juice, ice_cream, cake
@@ -24,13 +25,36 @@ When guests arrive or ask for a table. Extract the number of people.
 ### 2. Order (Food/Drinks)
 When seated guests order food. Extract the table number and map their requests to the Valid Menu Items.
 - Only accept orders for tables that currently have guests (guest count > 0).
-- If the user does not specify a table, use the only occupied table. If ambiguous, set intent to "unknown".
+- If the user does not specify a table, use the Recent Assigned Table if it is available and marked usable.
+- If there is no usable Recent Assigned Table, use the only occupied table. If ambiguous, set intent to "unknown".
+- Preserve item counts. If no count is mentioned, use count 1.
+- For multiple tables, create one order object per table.
 - User: "1번 테이블, 버거랑 콜라 주세요"
 - Output:
 {
   "intent": "order",
-  "table": 1,
-  "items": ["burger", "coke"]
+  "orders": [
+    {
+      "table": 1,
+      "items": [
+        {"item": "burger", "count": 1},
+        {"item": "coke", "count": 1}
+      ]
+    }
+  ]
+}
+- User: "방금 안내한 테이블에 물 2개 주세요"
+- Output:
+{
+  "intent": "order",
+  "orders": [
+    {
+      "table": 3,
+      "items": [
+        {"item": "water", "count": 2}
+      ]
+    }
+  ]
 }
 
 ### 3. Unknown (Errors / Invalid Requests)

@@ -15,6 +15,17 @@ MENU_ALIASES: dict[str, list[str]] = {
     'cake': ['cake', '케이크'],
 }
 
+COUNT_WORDS: dict[str, int] = {
+    '한': 1,
+    '하나': 1,
+    '두': 2,
+    '둘': 2,
+    '세': 3,
+    '셋': 3,
+    '네': 4,
+    '넷': 4,
+}
+
 
 def _extract_table_number(text: str) -> int | None:
     match = re.search(
@@ -27,8 +38,32 @@ def _extract_table_number(text: str) -> int | None:
     return int(match.group(1) or match.group(2) or match.group(3))
 
 
-def _extract_items(text: str, valid_items: set[str]) -> list[str]:
-    found: list[str] = []
+def _count_near_alias(text: str, alias: str) -> int:
+    count_token = r'(\d+|한|하나|두|둘|세|셋|네|넷)'
+    unit = r'\s*(?:개|잔|병|그릇|조각|인분)?'
+    escaped = re.escape(alias)
+
+    patterns = [
+        rf'{escaped}\s*{count_token}{unit}',
+        rf'{count_token}{unit}\s*{escaped}',
+    ]
+
+    for pattern in patterns:
+        match = re.search(pattern, text, re.IGNORECASE)
+        if not match:
+            continue
+
+        token = match.group(1)
+        if token.isdigit():
+            return max(1, int(token))
+        return COUNT_WORDS.get(token, 1)
+
+    return 1
+
+
+def _extract_item_counts(text: str, valid_items: set[str]) -> list[dict]:
+    found: list[dict] = []
+    seen: set[str] = set()
     lower = text.lower()
 
     for item_id, aliases in MENU_ALIASES.items():
@@ -37,15 +72,32 @@ def _extract_items(text: str, valid_items: set[str]) -> list[str]:
         for alias in aliases:
             if alias.isascii():
                 if re.search(rf'\b{re.escape(alias)}\b', lower):
-                    if item_id not in found:
-                        found.append(item_id)
+                    if item_id not in seen:
+                        found.append({
+                            'item': item_id,
+                            'count': _count_near_alias(lower, alias),
+                        })
+                        seen.add(item_id)
                     break
             elif alias in text:
-                if item_id not in found:
-                    found.append(item_id)
+                if item_id not in seen:
+                    found.append({
+                        'item': item_id,
+                        'count': _count_near_alias(text, alias),
+                    })
+                    seen.add(item_id)
                 break
 
     return found
+
+
+def _expand_items(item_counts: list[dict]) -> list[str]:
+    items: list[str] = []
+    for entry in item_counts:
+        item = entry['item']
+        count = int(entry.get('count', 1))
+        items.extend([item] * max(1, count))
+    return items
 
 
 def _infer_table(guest_counts: list[int]) -> int | None:
@@ -71,17 +123,25 @@ def parse_order_command(
     if table is None:
         table = _infer_table(guest_counts)
 
-    items = _extract_items(line, valid_items)
-    if not items:
+    item_counts = _extract_item_counts(line, valid_items)
+    if not item_counts:
         return None
 
     if table is None:
         return json.dumps(
             {
-                'action': 'unknown',
-                'table': 0,
+                'action': 'order',
+                'intent': 'order',
+                'table': None,
                 'destination': 'kitchen',
-                'items': items,
+                'items': _expand_items(item_counts),
+                'item_counts': item_counts,
+                'orders': [
+                    {
+                        'table': None,
+                        'items': item_counts,
+                    }
+                ],
                 'reason': 'table number is unclear',
             },
             ensure_ascii=False,
@@ -90,9 +150,17 @@ def parse_order_command(
     return json.dumps(
         {
             'action': 'order',
+            'intent': 'order',
             'table': table,
             'destination': 'kitchen',
-            'items': items,
+            'items': _expand_items(item_counts),
+            'item_counts': item_counts,
+            'orders': [
+                {
+                    'table': table,
+                    'items': item_counts,
+                }
+            ],
             'reason': '',
         },
         ensure_ascii=False,

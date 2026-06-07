@@ -9,6 +9,7 @@ def generate_launch_description():
     speech_language = LaunchConfiguration('speech_language')
     voice_trigger_key = LaunchConfiguration('voice_trigger_key')
     model = LaunchConfiguration('model')
+    robot_action_names = LaunchConfiguration('robot_action_names')
 
     return LaunchDescription([
         DeclareLaunchArgument(
@@ -31,10 +32,15 @@ def generate_launch_description():
             default_value='gpt-4o-mini',
             description='OpenAI model name (API key from .env)',
         ),
+        DeclareLaunchArgument(
+            'robot_action_names',
+            default_value='serve_task',
+            description='Comma-separated ServeTask action names for fleet dispatch',
+        ),
         Node(
             package='llm_serving_core',
-            executable='fleet_manager_node',
-            name='fleet_manager_node',
+            executable='user_input_node',
+            name='user_input_node',
             output='screen',
             emulate_tty=True,
             parameters=[{
@@ -45,18 +51,21 @@ def generate_launch_description():
         ),
         Node(
             package='llm_serving_core',
+            executable='fleet_manager_node',
+            name='fleet_manager_node',
+            output='screen',
+            parameters=[{
+                'robot_action_names': robot_action_names,
+            }],
+        ),
+        Node(
+            package='llm_serving_core',
             executable='llm_agent_node',
             name='llm_agent_node',
             output='screen',
             parameters=[{
                 'model': model,
             }],
-        ),
-        Node(
-            package='llm_serving_core',
-            executable='task_executor_node',
-            name='task_executor_node',
-            output='screen',
         ),
         Node(
             package='llm_serving_core',
