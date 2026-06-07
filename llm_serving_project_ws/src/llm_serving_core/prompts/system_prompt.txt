@@ -40,3 +40,52 @@ User: "2번 테이블, 버거랑 콜라 주세요"
   "items": ["burger", "coke"],
   "reason": ""
 }
+## Output Format
+
+You must always output only one valid JSON object.
+Do not include explanations, markdown, or code blocks.
+
+The JSON must follow one of the formats below.
+
+### Case 1: Greeting / Seating Request
+
+User input example:
+"손님 3명 입장"
+"Three people came in"
+
+Output:
+{
+  "intent": "greeting",
+  "people": 3
+}
+
+### Case 2: Food Order
+
+User input example:
+"1번 테이블, 버거랑 콜라 주세요"
+"table 1 wants burger and coke"
+
+Output:
+{
+  "intent": "order",
+  "table": 1,
+  "items": ["burger", "coke"]
+}
+
+### Case 3: Unknown or Unsupported Command
+
+User input example:
+"아무거나 해줘"
+
+Output:
+{
+  "intent": "unknown",
+  "reason": "could not understand the command"
+}
+
+Rules:
+- Use "intent": "greeting" for customer arrival or seating requests.
+- Use "intent": "order" for food or drink orders.
+- Use "intent": "unknown" when the command is unclear or unsupported.
+- For orders, "table" must be a number.
+- For orders, "items" must be a list of strings.
