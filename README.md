@@ -48,6 +48,20 @@ Robotics-AI-3/
 
 [`llm_serving_gazebo/worlds/RoboRestaurant__.world`](llm_serving_project_ws/src/llm_serving_gazebo/worlds/RoboRestaurant__.world) 를 사용합니다.
 
+## Demo Video
+
+아래 영상은 LLM 서빙 로봇 프로젝트의 실행 데모입니다.
+
+데모에서는 다음 흐름을 확인할 수 있습니다.
+
+1. 손님 입장 및 테이블 상태 갱신
+2. 자연어 주문 입력
+3. LLM Agent의 주문 JSON 변환
+4. 없는 테이블/없는 메뉴 요청에 대한 예외 처리
+5. Gazebo/Nav2 기반 로봇 이동 시나리오 확인
+
+[Demo Video](https://github.com/hwm31/Robotics-AI-3/issues/46#issuecomment-4642113521)
+
 ## 빠른 시작
 
 ```bash
