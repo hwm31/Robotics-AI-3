@@ -31,9 +31,10 @@ class TaskExecutorNode(Node):
             self.get_logger().error('Invalid task JSON.')
             return
 
-        if task.get('action') != 'order':
+        intent = task.get('intent') or task.get('action')
+        if intent != 'order':
             self.get_logger().warn(
-                f'Unsupported action: {task.get("action")}')
+                f'Unsupported intent: {intent}')
             return
 
         self._busy = True
