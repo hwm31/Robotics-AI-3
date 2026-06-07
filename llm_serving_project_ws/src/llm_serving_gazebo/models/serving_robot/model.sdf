@@ -60,7 +60,7 @@
             <remapping>~/out:=scan</remapping>
           </ros>
           <output_type>sensor_msgs/LaserScan</output_type>
-          <frame_name>laser_link</frame_name>
+          <frame_name>base_link</frame_name>
         </plugin>
       </sensor>
     </link>
@@ -69,5 +69,26 @@
       <parent>base_link</parent>
       <child>laser_link</child>
     </joint>
+
+    <plugin name="planar_move" filename="libgazebo_ros_planar_move.so">
+      <ros>
+        <namespace>/</namespace>
+        <remapping>cmd_vel:=cmd_vel_safe</remapping>
+        <remapping>odom:=odom</remapping>
+      </ros>
+
+      <update_rate>100</update_rate>
+      <publish_rate>30</publish_rate>
+
+      <publish_odom>true</publish_odom>
+      <publish_odom_tf>true</publish_odom_tf>
+
+      <odometry_frame>odom</odometry_frame>
+      <robot_base_frame>base_link</robot_base_frame>
+
+      <covariance_x>0.0001</covariance_x>
+      <covariance_y>0.0001</covariance_y>
+      <covariance_yaw>0.01</covariance_yaw>
+    </plugin>
   </model>
 </sdf>

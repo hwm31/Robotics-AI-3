@@ -13,11 +13,14 @@ class SafetyControllerNode(Node):
     def __init__(self):
         super().__init__('safety_controller_node')
         self.declare_parameter('min_distance', 0.35)
+        self.declare_parameter('front_angle_deg', 90.0)
         self.declare_parameter('scan_topic', 'scan')
         self.declare_parameter('cmd_vel_in', 'cmd_vel_raw')
         self.declare_parameter('cmd_vel_out', 'cmd_vel')
 
         self._min_dist = self.get_parameter('min_distance').value
+        self._front_angle = math.radians(
+            float(self.get_parameter('front_angle_deg').value))
         self._obstacle_detected = False
 
         scan_topic = self.get_parameter('scan_topic').value
@@ -33,15 +36,26 @@ class SafetyControllerNode(Node):
             f'Safety controller active (min_distance={self._min_dist}m)')
 
     def _on_scan(self, msg: LaserScan):
-        valid = [
-            r for r in msg.ranges
-            if msg.range_min < r < msg.range_max and not math.isinf(r)
-        ]
+        half_angle = self._front_angle / 2.0
+        valid = []
+
+        for index, distance in enumerate(msg.ranges):
+            angle = msg.angle_min + index * msg.angle_increment
+            if abs(angle) > half_angle:
+                continue
+            if msg.range_min < distance < msg.range_max and math.isfinite(distance):
+                valid.append(distance)
+
+        was_blocked = self._obstacle_detected
         self._obstacle_detected = bool(valid) and min(valid) < self._min_dist
+
         if self._obstacle_detected:
             stop = Twist()
             self.cmd_pub.publish(stop)
-            self.get_logger().warn('Obstacle detected — emergency stop!')
+            if not was_blocked:
+                self.get_logger().warn('Obstacle detected - emergency stop!')
+        elif was_blocked:
+            self.get_logger().info('Obstacle cleared - resuming velocity pass-through.')
 
     def _on_cmd_vel(self, msg: Twist):
         self._last_cmd = msg
@@ -58,7 +72,8 @@ def main(args=None):
         pass
     finally:
         node.destroy_node()
-        rclpy.shutdown()
+        if rclpy.ok():
+            rclpy.shutdown()
 
 
 if __name__ == '__main__':
