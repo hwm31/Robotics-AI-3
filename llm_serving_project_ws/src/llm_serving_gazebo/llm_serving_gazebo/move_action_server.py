@@ -348,19 +348,29 @@ class MoveActionServer(Node):
             f'Sending Nav2 goal to {self._nav_action_name} '
             f'for {step_name}.')
 
-        send_future = self._nav_client.send_goal_async(
-            nav_goal,
-            feedback_callback=lambda feedback: self._on_nav_feedback(
-                feedback,
-                step_name,
-            ),
-        )
-        if not self._wait_for_future(send_future, 5.0):
-            message = f'Timed out sending navigation goal for {step_name}'
-            self.get_logger().error(message)
-            return False, message
+        nav_goal_handle = None
+        for attempt in range(1, 6):
+            send_future = self._nav_client.send_goal_async(
+                nav_goal,
+                feedback_callback=lambda feedback: self._on_nav_feedback(
+                    feedback,
+                    step_name,
+                ),
+            )
+            if not self._wait_for_future(send_future, 5.0):
+                message = f'Timed out sending navigation goal for {step_name}'
+                self.get_logger().error(message)
+                return False, message
 
-        nav_goal_handle = send_future.result()
+            nav_goal_handle = send_future.result()
+            if nav_goal_handle is not None and nav_goal_handle.accepted:
+                break
+
+            self.get_logger().warn(
+                f'Navigation goal rejected for {step_name} '
+                f'(attempt {attempt}/5). Retrying...')
+            time.sleep(1.0)
+
         if nav_goal_handle is None or not nav_goal_handle.accepted:
             message = f'Navigation goal rejected for {step_name}'
             self.get_logger().error(message)
