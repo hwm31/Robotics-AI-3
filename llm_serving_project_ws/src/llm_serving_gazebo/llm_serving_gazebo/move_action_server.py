@@ -50,6 +50,7 @@ class MoveActionServer(Node):
 
         callback_group = ReentrantCallbackGroup()
         nav_action_name = self.get_parameter('nav_action_name').value
+        self._nav_action_name = str(nav_action_name)
         self._nav_client = ActionClient(
             self,
             NavigateToPose,
@@ -68,7 +69,7 @@ class MoveActionServer(Node):
 
         self._initial_pose_pub = self.create_publisher(
             PoseWithCovarianceStamped,
-            'initialpose',
+            '/initialpose',
             10,
         )
         self._greeting_sub = self.create_subscription(
@@ -116,19 +117,25 @@ class MoveActionServer(Node):
         )
 
     def _goal_callback(self, goal_request):
+        destination = (goal_request.destination or 'table').strip().lower()
+        items = list(goal_request.items)
         self.get_logger().info(
-            f'Order goal: table={goal_request.table_number}, '
-            f'items={list(goal_request.items)}')
+            f'ServeTask goal: destination={destination}, '
+            f'table={goal_request.table_number}, items={items}')
+        if destination not in ('table', 'kitchen'):
+            self.get_logger().warn(
+                f'Rejected: unsupported destination: {destination}.')
+            return GoalResponse.REJECT
         if goal_request.table_number <= 0:
             self.get_logger().warn('Rejected: table_number is required.')
-            return GoalResponse.REJECT
-        if not goal_request.items:
-            self.get_logger().warn('Rejected: no items in order.')
             return GoalResponse.REJECT
         if f'table_{goal_request.table_number}' not in self._poses:
             self.get_logger().warn(
                 f'Rejected: no navigation target for table '
                 f'{goal_request.table_number}.')
+            return GoalResponse.REJECT
+        if destination == 'kitchen' and not items:
+            self.get_logger().warn('Rejected: kitchen task requires items.')
             return GoalResponse.REJECT
         return GoalResponse.ACCEPT
 
@@ -145,10 +152,55 @@ class MoveActionServer(Node):
             return result
 
         try:
-            result = self._execute_serving_sequence(goal_handle)
+            destination = (goal_handle.request.destination or 'table').strip().lower()
+            items = list(goal_handle.request.items)
+            if destination == 'table' and not items:
+                result = self._execute_guiding_sequence(goal_handle)
+            else:
+                result = self._execute_serving_sequence(goal_handle)
         finally:
             self._navigation_lock.release()
 
+        return result
+
+    def _execute_guiding_sequence(self, goal_handle):
+        table_number = int(goal_handle.request.table_number)
+        table_key = f'table_{table_number}'
+
+        result = ServeTask.Result()
+        steps: list[tuple[str, str, float, float]] = [
+            ('guiding_to_table', table_key, 0.0, 0.85),
+        ]
+        if self._return_home and 'home' in self._poses:
+            steps.append(('returning_home', 'home', 0.88, 1.0))
+
+        for step_name, target_key, start_progress, end_progress in steps:
+            if goal_handle.is_cancel_requested:
+                goal_handle.canceled()
+                result.success = False
+                result.message = 'Canceled'
+                return result
+
+            ok, message = self._navigate_to_target(
+                target_key,
+                step_name,
+                goal_handle=goal_handle,
+                start_progress=start_progress,
+                end_progress=end_progress,
+            )
+            if not ok:
+                if goal_handle.is_cancel_requested:
+                    goal_handle.canceled()
+                else:
+                    goal_handle.abort()
+                result.success = False
+                result.message = message
+                return result
+
+        result.success = True
+        result.message = f'Guided guests to table {table_number}'
+        self._publish_feedback(goal_handle, 'completed', 1.0)
+        goal_handle.succeed()
         return result
 
     def _execute_serving_sequence(self, goal_handle):
@@ -283,24 +335,46 @@ class MoveActionServer(Node):
         if not self._nav_client.wait_for_server(
             timeout_sec=self._nav_server_timeout
         ):
-            return False, 'NavigateToPose action server not available'
+            message = (
+                f'NavigateToPose action server not available: '
+                f'{self._nav_action_name}'
+            )
+            self.get_logger().error(message)
+            return False, message
 
         nav_goal = NavigateToPose.Goal()
         nav_goal.pose = self._make_pose_stamped(pose)
+        self.get_logger().info(
+            f'Sending Nav2 goal to {self._nav_action_name} '
+            f'for {step_name}.')
 
-        send_future = self._nav_client.send_goal_async(
-            nav_goal,
-            feedback_callback=lambda feedback: self._on_nav_feedback(
-                feedback,
-                step_name,
-            ),
-        )
-        if not self._wait_for_future(send_future, 5.0):
-            return False, f'Timed out sending navigation goal for {step_name}'
+        nav_goal_handle = None
+        for attempt in range(1, 6):
+            send_future = self._nav_client.send_goal_async(
+                nav_goal,
+                feedback_callback=lambda feedback: self._on_nav_feedback(
+                    feedback,
+                    step_name,
+                ),
+            )
+            if not self._wait_for_future(send_future, 5.0):
+                message = f'Timed out sending navigation goal for {step_name}'
+                self.get_logger().error(message)
+                return False, message
 
-        nav_goal_handle = send_future.result()
+            nav_goal_handle = send_future.result()
+            if nav_goal_handle is not None and nav_goal_handle.accepted:
+                break
+
+            self.get_logger().warn(
+                f'Navigation goal rejected for {step_name} '
+                f'(attempt {attempt}/5). Retrying...')
+            time.sleep(1.0)
+
         if nav_goal_handle is None or not nav_goal_handle.accepted:
-            return False, f'Navigation goal rejected for {step_name}'
+            message = f'Navigation goal rejected for {step_name}'
+            self.get_logger().error(message)
+            return False, message
 
         self.get_logger().info(
             f'Navigating {step_name}: x={pose.x:.2f}, '
@@ -316,7 +390,9 @@ class MoveActionServer(Node):
             elapsed = time.monotonic() - start_time
             if elapsed > self._goal_timeout:
                 nav_goal_handle.cancel_goal_async()
-                return False, f'Navigation timed out during {step_name}'
+                message = f'Navigation timed out during {step_name}'
+                self.get_logger().error(message)
+                return False, message
 
             progress = self._interpolate_progress(
                 start_progress,
@@ -329,11 +405,12 @@ class MoveActionServer(Node):
 
         nav_result = result_future.result()
         if nav_result.status != GoalStatus.STATUS_SUCCEEDED:
-            return (
-                False,
+            message = (
                 f'Navigation failed during {step_name} '
-                f'(status={nav_result.status})',
+                f'(status={nav_result.status})'
             )
+            self.get_logger().error(message)
+            return False, message
 
         if goal_handle is not None:
             self._publish_feedback(goal_handle, step_name, end_progress)

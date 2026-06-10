@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import json
 import select
 import sys
 import termios
@@ -96,12 +97,18 @@ class UserInputNode(Node):
     def _publish_command(self, line: str, source: str) -> None:
         guest_json = parse_guest_command(line)
         if guest_json is not None:
-            msg = String()
-            msg.data = guest_json
-            self.guest_pub.publish(msg)
-            self.get_logger().info(
-                f'Published guest_command ({source}): {guest_json}')
-            return
+            try:
+                guest_command = json.loads(guest_json)
+            except json.JSONDecodeError:
+                guest_command = {}
+
+            if guest_command.get('event') in ('leave', 'status'):
+                msg = String()
+                msg.data = guest_json
+                self.guest_pub.publish(msg)
+                self.get_logger().info(
+                    f'Published guest_command ({source}): {guest_json}')
+                return
 
         msg = String()
         msg.data = line

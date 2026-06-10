@@ -3,6 +3,7 @@
 
 import json
 import os
+import threading
 
 import rclpy
 import yaml
@@ -19,15 +20,15 @@ class TableStateNode(Node):
 
         share_dir = get_package_share_directory('llm_serving_core')
         map_path = os.path.join(share_dir, 'config', 'restaurant_map.yaml')
-
         with open(map_path, 'r', encoding='utf-8') as f:
             restaurant_map = yaml.safe_load(f)
-
         tables = restaurant_map.get('tables', [])
         self._table_names = [t['name'] for t in tables]
         self._max_seats = [int(t.get('max_seats', 4)) for t in tables]
         self._guest_counts = [0] * len(tables)
-
+        
+        self._state_lock = threading.Lock()
+        
         self.status_pub = self.create_publisher(
             TableStatus,
             'table_status',
@@ -116,67 +117,50 @@ class TableStateNode(Node):
 
         return None
 
-    def _seat_guests(
-        self,
-        party_size: int,
-        table_number: int = 0
-    ) -> tuple[bool, int, str]:
+    def _seat_guests(self, party_size: int, table_number: int = 0):
+        # 3. 메서드 내부에서 lock 사용
+        with self._state_lock:
+            if party_size == 0:
+                return False, 0, 'party_size must be greater than 0'
 
-        if party_size == 0:
-            return False, 0, 'party_size must be greater than 0'
+            if table_number > 0:
+                index = table_number - 1
+                if index < 0 or index >= len(self._guest_counts):
+                    return False, 0, f'invalid table number: {table_number}'
+                if self._guest_counts[index] != 0:
+                    return False, 0, f'{self._table_label(index)} is not empty'
+                if party_size > self._max_seats[index]:
+                    return False, 0, f'{self._table_label(index)} max seats is {self._max_seats[index]}'
+                self._guest_counts[index] = party_size
+                self._publish_status()
+                return True, table_number, f'Seated {party_size} guests at {self._table_label(index)}'
 
-        if table_number > 0:
+            index = self._find_empty_table(party_size)
+            if index is None:
+                return False, 0, 'no available empty table'
+            self._guest_counts[index] = party_size
+            assigned = index + 1
+            self._publish_status()
+            return True, assigned, f'Seated {party_size} guests at {self._table_label(index)}'
+
+
+    def _leave_table(self, table_number: int) -> tuple[bool, str]:
+        with self._state_lock:
+            if table_number == 0:
+                return False, 'table_number must be greater than 0'
+
             index = table_number - 1
 
             if index < 0 or index >= len(self._guest_counts):
-                return False, 0, f'invalid table number: {table_number}'
+                return False, f'invalid table number: {table_number}'
 
-            if self._guest_counts[index] != 0:
-                return False, 0, f'{self._table_label(index)} is not empty'
+            if self._guest_counts[index] == 0:
+                return False, f'{self._table_label(index)} is already empty'
 
-            if party_size > self._max_seats[index]:
-                return False, 0, (
-                    f'{self._table_label(index)} max seats is '
-                    f'{self._max_seats[index]}'
-                )
-
-            self._guest_counts[index] = party_size
+            self._guest_counts[index] = 0
             self._publish_status()
 
-            return True, table_number, (
-                f'Seated {party_size} guests at {self._table_label(index)}'
-            )
-
-        index = self._find_empty_table(party_size)
-
-        if index is None:
-            return False, 0, 'no available empty table'
-
-        self._guest_counts[index] = party_size
-        assigned = index + 1
-
-        self._publish_status()
-
-        return True, assigned, (
-            f'Seated {party_size} guests at {self._table_label(index)}'
-        )
-
-    def _leave_table(self, table_number: int) -> tuple[bool, str]:
-        if table_number == 0:
-            return False, 'table_number must be greater than 0'
-
-        index = table_number - 1
-
-        if index < 0 or index >= len(self._guest_counts):
-            return False, f'invalid table number: {table_number}'
-
-        if self._guest_counts[index] == 0:
-            return False, f'{self._table_label(index)} is already empty'
-
-        self._guest_counts[index] = 0
-        self._publish_status()
-
-        return True, f'{self._table_label(index)} cleared'
+            return True, f'{self._table_label(index)} cleared'
 
     def _handle_seat(self, request, response):
         success, assigned, message = self._seat_guests(
@@ -207,43 +191,38 @@ class TableStateNode(Node):
     def _on_guest_command(self, msg: String):
         try:
             cmd = json.loads(msg.data)
-
         except json.JSONDecodeError:
-            self.get_logger().warn(
-                f'Invalid guest_command JSON: {msg.data}'
-            )
+            self.get_logger().warn(f'Invalid JSON: {msg.data}')
             return
 
         event = cmd.get('event')
-
         if event == 'arrive':
+            # 4. 변수 선언 위치 수정
             table = int(cmd.get('table', 0))
             count = int(cmd.get('count', 0))
+            self.get_logger().info(f"좌석 배정 요청: {count}명")
+            
+            # (중복 체크 로직 포함)
+            if table > 0 and self._guest_counts[table - 1] > 0:
+                self.get_logger().warn(f"이미 손님이 있는 테이블: {table}")
+                self._publish_assignment(False, table, "Table already occupied")
+                return
 
             success, assigned, message = self._seat_guests(count, table)
-
             level = self.get_logger().info if success else self.get_logger().warn
             level(message)
-
             self._publish_assignment(success, assigned, message)
-
         elif event == 'leave':
             table = int(cmd.get('table', 0))
-
             success, message = self._leave_table(table)
-
             level = self.get_logger().info if success else self.get_logger().warn
             level(message)
-
+            self._publish_assignment(success, table, message)
         elif event == 'status':
-            self.get_logger().info(
-                f'Table status: {self._format_status()}'
-            )
-
+            self.get_logger().info(self._format_status())
+            self._publish_status()
         else:
-            self.get_logger().warn(
-                f'Unknown guest event: {event}'
-            )
+            self.get_logger().warn(f'Unsupported guest event: {event}')
 
 
 def main(args=None):
